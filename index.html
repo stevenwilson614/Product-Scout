@@ -395,15 +395,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);}
             <th>Rank</th>
             <th>Store Name</th>
             <th>Location</th>
-            <th>New Revenue</th>
-            <th>30-day Revenue</th>
-            <th>Avg Monthly Revenue</th>
-            <th>30-day Sales</th>
-            <th>Avg Monthly Sales</th>
+            <th>Pendapatan rata-rata 30 Hari</th>
             <th>Price</th>
             <th>Rating</th>
-            <th>Stock</th>
-            <th>Wishlist</th>
+            <th>Reviews</th>
             <th>Link</th>
           </tr></thead>
           <tbody id="sellers-tbody"></tbody>
@@ -522,6 +517,39 @@ function fmtShort(n) {
 function fmtScore(n) {
   if (!n) return '—';
   return parseFloat(n).toFixed(2);
+}
+
+// ════════════════════════════════════════════════════════════
+//  PARSE HELPERS
+//  Handles formats like: Rp85,000 / 85.000 / 85,000 / 13,3k / 1.2M
+// ════════════════════════════════════════════════════════════
+function parseRp(val) {
+  if (!val && val !== 0) return 0;
+  // Remove currency symbols and spaces
+  let s = String(val).replace(/Rp/gi, '').replace(/\s/g, '').trim();
+  // Handle shorthand: 13,3k → 13300, 1,2M → 1200000, 1,2jt → 1200000
+  if (/[kK]$/.test(s)) return parseFloat(s.replace(',', '.').replace(/[kK]$/, '')) * 1000;
+  if (/[mM]$/.test(s)) return parseFloat(s.replace(',', '.').replace(/[mM]$/, '')) * 1000000;
+  if (/jt$/i.test(s))  return parseFloat(s.replace(',', '.').replace(/jt$/i, '')) * 1000000;
+  // Remove thousand separators — handles both 85,000 and 85.000 styles
+  // If there's a comma followed by exactly 3 digits at end → thousand separator
+  // If there's a dot followed by exactly 3 digits at end → thousand separator
+  s = s.replace(/,(?=\d{3}(\D|$))/g, '').replace(/\.(?=\d{3}(\D|$))/g, '');
+  // Now handle decimal comma e.g. 85,5 → 85.5
+  s = s.replace(',', '.');
+  return parseFloat(s) || 0;
+}
+
+function parseReviews(val) {
+  if (!val && val !== 0) return 0;
+  let s = String(val).replace(/\s/g, '').trim();
+  // Handle 13,3k / 13.3k / 1,2M / 1jt etc
+  if (/[kK]$/.test(s)) return Math.round(parseFloat(s.replace(',', '.').replace(/[kK]$/, '')) * 1000);
+  if (/[mM]$/.test(s)) return Math.round(parseFloat(s.replace(',', '.').replace(/[mM]$/, '')) * 1000000);
+  if (/jt$/i.test(s))  return Math.round(parseFloat(s.replace(',', '.').replace(/jt$/i, '')) * 1000000);
+  // Remove thousand separators
+  s = s.replace(/,(?=\d{3}(\D|$))/g, '').replace(/\.(?=\d{3}(\D|$))/g, '');
+  return parseInt(s) || 0;
 }
 
 // ════════════════════════════════════════════════════════════
@@ -780,27 +808,27 @@ async function loadSellerData(p) {
     trend:        r['Trend']                               || '',
     brand:        r['Brand']                               || '',
     listingDate:  r['Listing Date']                        || '',
-    origPrice:    parseFloat(r['Original Price'])          || 0,
-    price:        parseFloat(r['Price'])                   || 0,
-    revenue30:    parseFloat(r['30-day Revenue'])          || 0,
-    revenueAvg:   parseFloat(r['Average monthly revenue']) || 0,
-    revenueTotal: parseFloat(r['Total Revenue'])           || 0,
+    origPrice:    parseRp(r['Original Price']),
+    price:        parseRp(r['Price']),
+    revenue30:    parseRp(r['30-day Revenue']),
+    revenueAvg:   parseRp(r['Average monthly revenue']),
+    revenueTotal: parseRp(r['Total Revenue']),
     sales30:      parseFloat(r['30-day Sales'])            || 0,
     salesAvg:     parseFloat(r['Average monthly sales'])   || 0,
     salesTotal:   parseFloat(r['Total Sold'])              || 0,
     stock:        parseFloat(r['Stock Count'])             || 0,
-    stockValue:   parseFloat(r['Stock Value'])             || 0,
+    stockValue:   parseRp(r['Stock Value']),
     rating:       parseFloat(r['Rating'])                  || 0,
-    reviews:      parseFloat(r['Review Count'])            || 0,
+    reviews:      parseReviews(r['Review Count']),
     wishlist:     parseFloat(r['Wishlist'])                || 0,
     comments:     parseFloat(r['Comments'])                || 0,
     slug:         r['Slug']                                || '',
     url:          r['URL']                                 || '#',
     image:        r['Image']                               || '',
-    newRevenue:   parseFloat(r['New Revenue'])             || 0,
+    newRevenue:   parseRp(r['New Revenue']),
   })).filter(s => s.name);
 
-  // ── MEDIAN 15 SELECTION ──────────────────────────────────
+  // ── TOP 15 by New Revenue ────────────────────────────────
   // Step 1: sum all New Revenue values
   const totalNewRevenue = mapped.reduce((sum, s) => sum + s.newRevenue, 0);
 
@@ -808,19 +836,10 @@ async function loadSellerData(p) {
   const threshold = totalNewRevenue * 0.01;
   const qualified = mapped.filter(s => s.newRevenue > threshold);
 
-  // Step 3: sort qualified sellers by New Revenue low → high to find median
-  const sortedAsc = [...qualified].sort((a, b) => a.newRevenue - b.newRevenue);
-  const total  = sortedAsc.length;
-  const mid    = Math.floor(total / 2);      // true median index
-  const count  = 15;
-  const half   = Math.floor(count / 2);      // 7 each side
-  const start  = Math.max(0, mid - half);
-  const end    = Math.min(total, start + count);
-
-  // Step 4: slice median 15, then sort greatest → least by New Revenue for display
-  const sellers = sortedAsc
-    .slice(start, end)
+  // Step 3: sort by New Revenue greatest → least, take top 15
+  const sellers = qualified
     .sort((a, b) => b.newRevenue - a.newRevenue)
+    .slice(0, 15)
     .map((s, i) => ({ ...s, rank: i + 1 }));
 
   document.getElementById('sellers-tbody').innerHTML = sellers.map(s => {
@@ -834,15 +853,9 @@ async function loadSellerData(p) {
       </td>
       <td style="color:var(--tl);font-size:.78rem">${s.location || '—'}</td>
       <td style="color:var(--green);font-weight:800">${fmt(s.newRevenue)}</td>
-      <td style="color:var(--green);font-weight:600">${fmt(s.revenue30)}</td>
-      <td style="color:var(--green);font-weight:600">${fmt(s.revenueAvg)}</td>
-      <td style="font-weight:600">${s.sales30 || '—'}</td>
-      <td style="font-weight:600">${s.salesAvg || '—'}</td>
       <td style="color:var(--orange);font-weight:600">${fmt(s.price)}</td>
-      <td>${s.rating ? `<span class="stars">★</span> ${s.rating}` : '—'}
-          ${s.reviews ? `<span style="color:var(--tl);font-size:.72rem"> (${s.reviews})</span>` : ''}</td>
-      <td style="color:var(--tl);font-size:.78rem">${s.stock ? s.stock.toLocaleString() : '—'}</td>
-      <td style="color:var(--tl);font-size:.78rem">${s.wishlist ? s.wishlist.toLocaleString() : '—'}</td>
+      <td>${s.rating ? `<span class="stars">★</span> ${s.rating}` : '—'}</td>
+      <td style="color:var(--tl);font-size:.78rem">${s.reviews ? s.reviews.toLocaleString('id-ID') : '—'}</td>
       <td><button class="vb" onclick="window.open('${s.url}','_blank')">Visit ↗</button></td>
     </tr>`;
   }).join('');
