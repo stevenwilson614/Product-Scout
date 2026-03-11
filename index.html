@@ -384,7 +384,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);}
 
     <!-- Top Sellers -->
     <div class="sel-card">
-      <div class="sel-h">🏆 Toko yang Bagus</div>
+      <div class="sel-h">🏆 Top Sellers Performance</div>
       <div id="sellers-loading" style="text-align:center;padding:24px;color:var(--tl);font-size:.85rem;">
         <div class="spinner" style="margin:0 auto 10px;"></div>
         Loading seller data...
@@ -393,13 +393,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);}
         <table class="sel-t">
           <thead><tr>
             <th>Rank</th>
-            <th>Toko</th>
-            <th>Lokasi</th>
-            <th>Pendapatan 30-hari</th>
-            <th>Pendapatan Bulanan Rata-Rata</th>
+            <th>Store Name</th>
+            <th>Location</th>
+            <th>New Revenue</th>
+            <th>30-day Revenue</th>
+            <th>Avg Monthly Revenue</th>
             <th>30-day Sales</th>
             <th>Avg Monthly Sales</th>
-            <th>Harga</th>
+            <th>Price</th>
             <th>Rating</th>
             <th>Stock</th>
             <th>Wishlist</th>
@@ -414,13 +415,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);}
 
 <script>
 // ════════════════════════════════════════════════════════════
-//  CONFIG — 1zKpY_hOafVaP9ap44v9WDdS2iP4eHj7eMscTHGTvqRU
+//  CONFIG — SET YOUR MASTER SHEET ID HERE
 //  This is the Google Sheet with your Products master list.
 //  Get the ID from the URL:
-//  https://docs.google.com/spreadsheets/d/1zKpY_hOafVaP9ap44v9WDdS2iP4eHj7eMscTHGTvqRU/edit
+//  https://docs.google.com/spreadsheets/d/THIS_PART_HERE/edit
 // ════════════════════════════════════════════════════════════
 const MASTER_SHEET_ID  = '1zKpY_hOafVaP9ap44v9WDdS2iP4eHj7eMscTHGTvqRU';
-const MASTER_TAB_NAME  = 'SheetList'; // Change if your tab has a different name e.g. 'Products'
+const MASTER_TAB_NAME  = 'SheetList';
 
 // ════════════════════════════════════════════════════════════
 //  YOUR MASTER SHEET COLUMNS (exact names from your sheet):
@@ -772,36 +773,54 @@ async function loadSellerData(p) {
   }
 
   // Map your exact seller sheet columns
-  const sellers = rows
-    .slice(0, 20) // grab up to 20, then sort and take top 10
-    .map((r, i) => ({
-      rank:         parseInt(r['No'])                        || i + 1,
-      name:         r['Store Name']                          || '',
-      location:     r['Location']                            || '',
-      trend:        r['Trend']                               || '',
-      brand:        r['Brand']                               || '',
-      listingDate:  r['Listing Date']                        || '',
-      origPrice:    parseFloat(r['Original Price'])          || 0,
-      price:        parseFloat(r['Price'])                   || 0,
-      revenue30:    parseFloat(r['30-day Revenue'])          || 0,
-      revenueAvg:   parseFloat(r['Average monthly revenue']) || 0,
-      revenueTotal: parseFloat(r['Total Revenue'])           || 0,
-      sales30:      parseFloat(r['30-day Sales'])            || 0,
-      salesAvg:     parseFloat(r['Average monthly sales'])   || 0,
-      salesTotal:   parseFloat(r['Total Sold'])              || 0,
-      stock:        parseFloat(r['Stock Count'])             || 0,
-      stockValue:   parseFloat(r['Stock Value'])             || 0,
-      rating:       parseFloat(r['Rating'])                  || 0,
-      reviews:      parseFloat(r['Review Count'])            || 0,
-      wishlist:     parseFloat(r['Wishlist'])                || 0,
-      comments:     parseFloat(r['Comments'])                || 0,
-      slug:         r['Slug']                                || '',
-      url:          r['URL']                                 || '#',
-      image:        r['Image']                               || '',
-      newRevenue:   parseFloat(r['New Revenue'])             || 0,
-    }))
-    .sort((a, b) => b.revenueAvg - a.revenueAvg) // rank by average monthly revenue
-    .slice(0, 10)
+  const mapped = rows.map((r, i) => ({
+    rank:         parseInt(r['No'])                        || i + 1,
+    name:         r['Store Name']                          || '',
+    location:     r['Location']                            || '',
+    trend:        r['Trend']                               || '',
+    brand:        r['Brand']                               || '',
+    listingDate:  r['Listing Date']                        || '',
+    origPrice:    parseFloat(r['Original Price'])          || 0,
+    price:        parseFloat(r['Price'])                   || 0,
+    revenue30:    parseFloat(r['30-day Revenue'])          || 0,
+    revenueAvg:   parseFloat(r['Average monthly revenue']) || 0,
+    revenueTotal: parseFloat(r['Total Revenue'])           || 0,
+    sales30:      parseFloat(r['30-day Sales'])            || 0,
+    salesAvg:     parseFloat(r['Average monthly sales'])   || 0,
+    salesTotal:   parseFloat(r['Total Sold'])              || 0,
+    stock:        parseFloat(r['Stock Count'])             || 0,
+    stockValue:   parseFloat(r['Stock Value'])             || 0,
+    rating:       parseFloat(r['Rating'])                  || 0,
+    reviews:      parseFloat(r['Review Count'])            || 0,
+    wishlist:     parseFloat(r['Wishlist'])                || 0,
+    comments:     parseFloat(r['Comments'])                || 0,
+    slug:         r['Slug']                                || '',
+    url:          r['URL']                                 || '#',
+    image:        r['Image']                               || '',
+    newRevenue:   parseFloat(r['New Revenue'])             || 0,
+  })).filter(s => s.name);
+
+  // ── MEDIAN 15 SELECTION ──────────────────────────────────
+  // Step 1: sum all New Revenue values
+  const totalNewRevenue = mapped.reduce((sum, s) => sum + s.newRevenue, 0);
+
+  // Step 2: keep only sellers doing more than 1% of total New Revenue
+  const threshold = totalNewRevenue * 0.01;
+  const qualified = mapped.filter(s => s.newRevenue > threshold);
+
+  // Step 3: sort qualified sellers by New Revenue low → high to find median
+  const sortedAsc = [...qualified].sort((a, b) => a.newRevenue - b.newRevenue);
+  const total  = sortedAsc.length;
+  const mid    = Math.floor(total / 2);      // true median index
+  const count  = 15;
+  const half   = Math.floor(count / 2);      // 7 each side
+  const start  = Math.max(0, mid - half);
+  const end    = Math.min(total, start + count);
+
+  // Step 4: slice median 15, then sort greatest → least by New Revenue for display
+  const sellers = sortedAsc
+    .slice(start, end)
+    .sort((a, b) => b.newRevenue - a.newRevenue)
     .map((s, i) => ({ ...s, rank: i + 1 }));
 
   document.getElementById('sellers-tbody').innerHTML = sellers.map(s => {
@@ -814,8 +833,9 @@ async function loadSellerData(p) {
         ${s.brand ? `<div class="shs">${s.brand}</div>` : ''}
       </td>
       <td style="color:var(--tl);font-size:.78rem">${s.location || '—'}</td>
-      <td style="color:var(--green);font-weight:700">${fmt(s.revenue30)}</td>
-      <td style="color:var(--green);font-weight:700">${fmt(s.revenueAvg)}</td>
+      <td style="color:var(--green);font-weight:800">${fmt(s.newRevenue)}</td>
+      <td style="color:var(--green);font-weight:600">${fmt(s.revenue30)}</td>
+      <td style="color:var(--green);font-weight:600">${fmt(s.revenueAvg)}</td>
       <td style="font-weight:600">${s.sales30 || '—'}</td>
       <td style="font-weight:600">${s.salesAvg || '—'}</td>
       <td style="color:var(--orange);font-weight:600">${fmt(s.price)}</td>
