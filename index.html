@@ -254,7 +254,30 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);}
 .fl{color:var(--tm);}.fv{font-weight:700;}
 .fv.o{color:var(--orange);}.fv.r{color:#e74c3c;}.fv.b{color:#2980b9;}
 
-/* ── LOADING OVERLAY ── */
+/* ── FEEDBACK TAB ── */
+.feedback-tab{
+  position:fixed;
+  right:-1px;
+  top:50%;
+  transform:translateY(-50%) rotate(-90deg) translateX(50%);
+  transform-origin:right center;
+  background:var(--grad);
+  color:#fff;
+  font-size:.78rem;
+  font-weight:700;
+  padding:8px 16px;
+  border-radius:8px 8px 0 0;
+  cursor:pointer;
+  z-index:500;
+  letter-spacing:.04em;
+  box-shadow:-2px 0 12px rgba(0,0,0,.15);
+  transition:padding .2s;
+  white-space:nowrap;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.feedback-tab:hover{padding:10px 18px;}
 .loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:12px;}
 .spinner{width:36px;height:36px;border:3px solid #f0ebe4;border-top-color:var(--orange);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
@@ -538,6 +561,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--td);}
     </div>
 
   </div><!-- end det-page-wrap -->
+</div>
+
+<!-- FEEDBACK TAB — always visible on right side -->
+<div class="feedback-tab" onclick="openFeedback()">
+  💬 Feedback
 </div>
 
 <script>
