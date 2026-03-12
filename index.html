@@ -15,12 +15,18 @@
 ──────────────────────────────────────────────────────────────────────────── -->
 
 <!-- ─── FEATUREBASE FEEDBACK ──────────────────────────────────────────────
-     1. Go to https://featurebase.app and create an org
-     2. Uncomment the block below and replace YOUR_ORG
-<script>
-(function(w,d,i,s){function l(){if(!d.getElementById(i)){var f=d.getElementsByTagName(s)[0],e=d.createElement(s);e.type="text/javascript",e.async=!0,e.src="https://do.featurebase.app/js/sdk.js",e.id=i,f.parentNode.insertBefore(e,f)}}if("object"==typeof w.Featurebase)l();else{w.Featurebase=function(){w.Featurebase.q.push(arguments)},w.Featurebase.q=[],l()}Featurebase("initialize_feedback_widget",{organization:"YOUR_ORG",theme:"light",placement:"right"})})(window,document,"featurebase-sdk","script");
-</script>
+     Replace "yourorg" below with your Featurebase org name
+     (the subdomain from your workspace URL e.g. https://yourorg.featurebase.app)
 ──────────────────────────────────────────────────────────────────────────── -->
+<script>!(function(e,t){const a="featurebase-sdk";function n(){if(!t.getElementById(a)){var e=t.createElement("script");(e.id=a),(e.src="https://do.featurebase.app/js/sdk.js"),t.getElementsByTagName("script")[0].parentNode.insertBefore(e,t.getElementsByTagName("script")[0])}}"function"!=typeof e.Featurebase&&(e.Featurebase=function(){(e.Featurebase.q=e.Featurebase.q||[]).push(arguments)}),"complete"===t.readyState||"interactive"===t.readyState?n():t.addEventListener("DOMContentLoaded",n)})(window,document);</script>
+<script>
+Featurebase("initialize_feedback_widget", {
+  organization: "productscout",
+  theme: "light",
+  placement: "right",
+  locale: "en"
+});
+</script>
 
 <style>
 :root{
@@ -1145,9 +1151,7 @@ function setMainImg(src, thumbEl) {
 }
 
 function openFeedback() {
-  // Uncomment when Featurebase is configured:
-  // window.Featurebase('open_feedback_widget');
-  alert('Feedback coming soon!');
+  window.Featurebase('open_feedback_widget');
 }
 
 // ── START ──
