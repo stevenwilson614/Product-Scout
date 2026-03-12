@@ -1105,6 +1105,49 @@ async function loadData() {
   renderHomeGrid();
   renderPills();
   renderDiscGrid();
+  prefetchCardImages(); // load product card images from seller sheets in background
+}
+
+// Prefetch primary images for product cards from each product's seller sheet
+async function prefetchCardImages(limit = 40) {
+  const productsToPrefetch = allProducts.slice(0, limit);
+  for (const p of productsToPrefetch) {
+    const sheetId = extractSheetId(p.sheetUrl);
+    if (!sheetId) continue;
+
+    let rows = null;
+    for (const tab of ['Sheet1', 'Sellers', 'Data', p.name]) {
+      rows = await fetchSheet(sheetId, tab);
+      if (rows && rows.length) break;
+    }
+    if (!rows || !rows.length) continue;
+
+    const imgRow = rows.find(r => r['Image']) || rows[0];
+    const imgUrl = imgRow['Image'];
+    if (!imgUrl) continue;
+
+    // Save on product object for reuse
+    p.image = imgUrl;
+
+    // Update the corresponding product card in the grid
+    const cardRoot = document.querySelector(`.product-card[onclick="openDetail(${p.id})"]`);
+    if (!cardRoot) continue;
+
+    const cardImg = cardRoot.querySelector('.card-img');
+    if (!cardImg) continue;
+
+    let imgEl = cardImg.querySelector('img');
+    if (!imgEl) {
+      imgEl = document.createElement('img');
+      imgEl.alt = p.name || '';
+      cardImg.insertBefore(imgEl, cardImg.firstChild);
+    }
+    imgEl.src = imgUrl;
+    imgEl.onerror = function () { this.style.display = 'none'; };
+
+    const emojiEl = cardImg.querySelector('.card-emoji');
+    if (emojiEl) emojiEl.style.display = 'none';
+  }
 }
 
 // ════════════════════════════════════════════════════════════
