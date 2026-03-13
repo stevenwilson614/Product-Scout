@@ -302,8 +302,15 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
 .det-sellers{background:#fff;border-radius:12px;padding:18px 20px;box-shadow:var(--sh);margin-bottom:14px;}
 .sel-t{width:100%;border-collapse:collapse;}
 .sel-t th{text-align:left;font-size:.7rem;font-weight:600;color:var(--tl);text-transform:uppercase;letter-spacing:.04em;padding:6px 8px;border-bottom:2px solid var(--border);}
-.sel-t td{padding:10px 8px;font-size:.81rem;border-bottom:1px solid #f0ebe4;vertical-align:middle;}
+.sel-t td{padding:10px 8px;font-size:.81rem;border-bottom:1px solid #f0ebe4;vertical-align:middle;transition:padding .18s ease;}
 .sel-t tr:last-child td{border-bottom:none;}
+.sel-t tbody tr{transition:background .18s ease,transform .18s ease,box-shadow .18s ease;cursor:pointer;}
+.sel-t tbody tr:hover{background:#fff8f5;transform:scale(1.012);box-shadow:0 3px 12px rgba(0,0,0,.08);z-index:1;position:relative;}
+.sel-t tbody tr:hover td{padding-top:14px;padding-bottom:14px;}
+.sel-img{width:48px;height:48px;border-radius:8px;object-fit:cover;background:#f0ebe4;display:block;flex-shrink:0;}
+.sel-img-wrap{width:48px;height:48px;border-radius:8px;background:#f0ebe4;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.sel-age{font-size:.75rem;color:var(--tl);white-space:nowrap;}
+.sel-age span{display:inline-block;background:#f5f0ea;border-radius:4px;padding:2px 6px;}
 .rbg{width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.76rem;color:#fff;font-family:'Roboto', 'Noto Sans', sans-serif;}
 .rb1{background:linear-gradient(135deg,#f6d365,#fda085);}
 .rb2{background:linear-gradient(135deg,#cfd9df,#a8b8c0);}
@@ -723,8 +730,10 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
           <table class="sel-t">
             <thead><tr>
               <th>Rank</th>
+              <th></th>
               <th>Store Name</th>
               <th>Location</th>
+              <th>Listing Age</th>
               <th>Pendapatan rata-rata 30 Hari</th>
               <th>Price</th>
               <th>Rating</th>
@@ -1567,19 +1576,26 @@ async function loadSellerData(p) {
 
   document.getElementById('sellers-tbody').innerHTML = sellers.map(s => {
     const rankClass = s.rank === 1 ? 'rb1' : s.rank === 2 ? 'rb2' : s.rank === 3 ? 'rb3' : 'rbn';
+    const ageMonths = parseListingDate(s.listingDate);
+    const ageStr = ageMonths ? fmtAge(ageMonths) : '—';
+    const imgCell = s.image
+      ? `<img class="sel-img" src="${s.image}" alt="" onerror="this.parentElement.innerHTML='<div class=sel-img-wrap>📦</div>'">`
+      : `<div class="sel-img-wrap">📦</div>`;
     return `
-    <tr>
+    <tr onclick="window.open('${s.url}','_blank')">
       <td><div class="rbg ${rankClass}">${s.rank}</div></td>
+      <td style="padding-right:4px">${imgCell}</td>
       <td>
         <div class="shn">${s.name}</div>
         ${s.brand ? `<div class="shs">${s.brand}</div>` : ''}
       </td>
       <td style="color:var(--tl);font-size:.78rem">${s.location || '—'}</td>
+      <td class="sel-age"><span>${ageStr}</span></td>
       <td style="color:var(--green);font-weight:700">${fmt(s.newRevenue)}</td>
       <td style="color:var(--orange);font-weight:600">${fmt(s.price)}</td>
       <td>${s.rating ? `<span class="stars">★</span> ${s.rating}` : '—'}</td>
       <td style="color:var(--tl);font-size:.78rem">${s.reviews ? s.reviews.toLocaleString('id-ID') : '—'}</td>
-      <td><button class="vb" onclick="window.open('${s.url}','_blank')">Visit ↗</button></td>
+      <td><button class="vb" onclick="event.stopPropagation();window.open('${s.url}','_blank')">Visit ↗</button></td>
     </tr>`;
   }).join('');
 }
