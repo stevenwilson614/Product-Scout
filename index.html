@@ -1379,11 +1379,6 @@ function renderDetail(p) {
   document.getElementById('d-age-med').textContent = '—';
   document.getElementById('d-age-max').textContent = '—';
 
-  // Common features — generic until we can parse from seller data
-  document.getElementById('d-features').innerHTML = [
-    p.category, 'Free Shipping', 'Shopee Mall', 'Voucher Available', 'COD Available'
-  ].map(f => `<span class="det-tag">${f}</span>`).join('');
-
   // Financial breakdown
   const newUnits  = p.newUnits  || 0;
   const expUnits  = p.expUnits  || 0;
