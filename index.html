@@ -390,6 +390,25 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
 .sg-color-dot{width:12px;height:12px;border-radius:50%;border:1px solid rgba(0,0,0,.12);flex-shrink:0;}
 .sg-tip{font-size:.82rem;color:#444;line-height:1.65;background:#fff;border-radius:8px;padding:12px 14px;border-left:3px solid var(--orange);}
 .sg-powered{font-size:.68rem;color:var(--tl);margin-top:10px;text-align:right;opacity:.7;}
+
+/* ── SCORE EXPLANATION ── */
+.score-exp-wrap{background:#fff;border:1.5px solid #f0ebe4;border-radius:12px;overflow:hidden;margin-top:0;}
+.score-exp-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#faf7f4;border-bottom:1px solid #f0ebe4;cursor:pointer;user-select:none;}
+.score-exp-title{font-size:.82rem;font-weight:700;color:#333;display:flex;align-items:center;gap:7px;}
+.score-exp-total{font-size:.82rem;font-weight:900;color:#fff;padding:3px 10px;border-radius:20px;}
+.score-exp-toggle{font-size:.75rem;color:var(--tl);transition:transform .2s;}
+.score-exp-body{padding:12px 16px;display:none;}
+.score-exp-body.open{display:block;}
+.score-metric{display:grid;grid-template-columns:1fr auto;align-items:start;gap:8px;padding:9px 0;border-bottom:1px solid #f5f0ea;}
+.score-metric:last-child{border-bottom:none;padding-bottom:0;}
+.score-metric-left{}
+.score-metric-name{font-size:.8rem;font-weight:700;color:#222;margin-bottom:3px;}
+.score-metric-desc{font-size:.75rem;color:var(--tl);line-height:1.55;}
+.score-metric-right{text-align:right;flex-shrink:0;}
+.score-metric-val{font-size:1rem;font-weight:900;font-family:'Roboto','Noto Sans',sans-serif;}
+.score-metric-bar{width:60px;height:5px;background:#f0ebe4;border-radius:3px;margin-top:4px;margin-left:auto;}
+.score-metric-bar-fill{height:100%;border-radius:3px;transition:width .4s ease;}
+.score-exp-loading{padding:16px;font-size:.82rem;color:var(--tl);display:flex;align-items:center;gap:8px;}
 .loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:12px;}
 .spinner{width:36px;height:36px;border:3px solid #f0ebe4;border-top-color:var(--orange);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
@@ -646,6 +665,24 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
               <span class="det-score-badge" id="d-score-badge">Score <span id="d-score">—</span></span>
               <span class="det-cat-tag" id="d-cat">—</span>
             </div>
+
+            <!-- score explanation accordion -->
+            <div class="score-exp-wrap" style="margin-bottom:14px;">
+              <div class="score-exp-header" onclick="toggleScoreExp()">
+                <span class="score-exp-title">📊 Kenapa skor ini?</span>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span class="score-exp-total" id="d-score-exp-total" style="background:#aaa;">—</span>
+                  <span class="score-exp-toggle" id="score-exp-chevron">▼</span>
+                </div>
+              </div>
+              <div class="score-exp-body" id="score-exp-body">
+                <div class="score-exp-loading" id="score-exp-loading">
+                  <div class="spinner" style="width:16px;height:16px;border-width:2px;"></div>Memuat data skor...
+                </div>
+                <div id="score-exp-metrics"></div>
+              </div>
+            </div>
+
             <div class="det-name" id="d-name">—</div>
 
             <!-- selling price range -->
@@ -1423,6 +1460,18 @@ function renderDetail(p) {
   document.getElementById('sellers-loading').innerHTML = '<div class="spinner" style="margin:0 auto 10px;"></div>Loading seller data...';
   document.getElementById('sellers-table-wrap').style.display = 'none';
   document.getElementById('d-thumbs').innerHTML = '';
+  // Reset score explanation
+  const scoreBody = document.getElementById('score-exp-body');
+  const scoreMetrics = document.getElementById('score-exp-metrics');
+  const scoreLoading = document.getElementById('score-exp-loading');
+  const scoreTotal = document.getElementById('d-score-exp-total');
+  if (scoreBody) scoreBody.classList.remove('open');
+  if (scoreMetrics) scoreMetrics.innerHTML = '';
+  if (scoreLoading) { scoreLoading.style.display = 'flex'; }
+  if (scoreTotal) { scoreTotal.textContent = '—'; scoreTotal.style.background = '#aaa'; }
+  const chevron = document.getElementById('score-exp-chevron');
+  if (chevron) chevron.style.transform = '';
+
   // Reset sourcing guide for new product
   const srcResult = document.getElementById('sourcing-result');
   const srcLoading = document.getElementById('sourcing-loading');
@@ -1441,6 +1490,16 @@ async function loadSellerData(p) {
       '<p style="color:var(--tl);padding:20px 0;">No seller sheet linked for this product.</p>';
     return;
   }
+
+  // Fetch Score tab in parallel
+  fetchScoreTab(sheetId).then(scoreRows => {
+    if (scoreRows && scoreRows.length >= 5) {
+      renderScoreExp(scoreRows, currentProduct?.score || 0);
+    } else {
+      const l = document.getElementById('score-exp-loading');
+      if (l) l.innerHTML = '<span style="color:var(--tl);font-size:.8rem">Data skor tidak tersedia.</span>';
+    }
+  });
 
   // Try fetching — the seller sheet's first tab (Sheet1 or whatever it's named)
   // We try common tab names automatically
@@ -1768,6 +1827,103 @@ function renderSourcingGuide(data) {
     </div>
     <div class="sg-powered">✨ Powered by Claude AI · Based on top 10 seller analysis</div>
   `;
+}
+
+
+// ════════════════════════════════════════════════════════════
+//  SCORE EXPLANATION
+// ════════════════════════════════════════════════════════════
+function toggleScoreExp() {
+  const body    = document.getElementById('score-exp-body');
+  const chevron = document.getElementById('score-exp-chevron');
+  if (!body) return;
+  const isOpen = body.classList.toggle('open');
+  chevron.style.transform = isOpen ? 'rotate(180deg)' : '';
+}
+
+// Each metric: key shown in col A/B of Score sheet, bahasa label, bahasa description
+const SCORE_METRICS = [
+  {
+    key: 0, // row index 0 in Score tab
+    label: 'Jumlah Penjual Aktif',
+    desc: 'Berapa banyak penjual yang berkontribusi lebih dari 1% dari total pendapatan pasar. Semakin banyak penjual aktif, semakin terbukti permintaan produk ini.',
+    maxVal: 2,
+  },
+  {
+    key: 1,
+    label: 'Dominasi Penjual Teratas',
+    desc: 'Berapa persen pasar yang dikuasai oleh 1 penjual terbaik. Skor lebih tinggi berarti pasar lebih merata — tidak dikuasai satu pemain saja.',
+    maxVal: 2,
+  },
+  {
+    key: 2,
+    label: 'Konsentrasi Top 10 Penjual',
+    desc: 'Berapa persen pasar yang dikontrol oleh 10 penjual terbaik. Jika angkanya terlalu tinggi, pasar sudah sangat kompetitif dan sulit ditembus pemain baru.',
+    maxVal: 2,
+  },
+  {
+    key: 3,
+    label: 'Konsistensi Pendapatan (Mean/Median)',
+    desc: 'Perbandingan rata-rata dan median pendapatan penjual. Skor tinggi berarti pendapatan antar penjual lebih merata — peluang sukses lebih konsisten.',
+    maxVal: 2,
+  },
+  {
+    key: 4,
+    label: 'Rasio Penjual Baru (NUB Median)',
+    desc: 'Seberapa baik penjual baru bisa bersaing dibandingkan median pasar. Skor tinggi berarti penjual baru punya peluang nyata mendapatkan pendapatan yang layak.',
+    maxVal: 2,
+  },
+];
+
+async function fetchScoreTab(sheetId) {
+  const rows = await fetchSheet(sheetId, 'Score');
+  return rows; // each row is an object keyed by column header
+}
+
+function renderScoreExp(scoreRows, totalScore) {
+  const loadingEl = document.getElementById('score-exp-loading');
+  const metricsEl = document.getElementById('score-exp-metrics');
+  const totalEl   = document.getElementById('d-score-exp-total');
+  if (!metricsEl) return;
+
+  if (loadingEl) loadingEl.style.display = 'none';
+
+  // Score rows: we expect 5 rows, score value is in column E (index 4)
+  // The gviz API returns columns by header name — col E header may vary
+  // So we grab all values from each row and pick the 5th cell (index 4)
+  const vals = scoreRows.slice(0, 5).map(row => {
+    const cells = Object.values(row);
+    // Find a numeric value — col E is index 4
+    const v = parseFloat(cells[4]);
+    return isNaN(v) ? 0 : v;
+  });
+
+  const total = vals.reduce((s, v) => s + v, 0);
+  const color = scoreColor(total);
+
+  if (totalEl) {
+    totalEl.textContent = total.toFixed(2);
+    totalEl.style.background = color;
+  }
+
+  metricsEl.innerHTML = SCORE_METRICS.map((m, i) => {
+    const val   = vals[i] ?? 0;
+    const pct   = Math.min(100, (val / m.maxVal) * 100);
+    const clr   = val >= m.maxVal * 0.75 ? '#00B14F' : val >= m.maxVal * 0.4 ? '#F5A623' : '#E74C3C';
+    return `
+      <div class="score-metric">
+        <div class="score-metric-left">
+          <div class="score-metric-name">${m.label}</div>
+          <div class="score-metric-desc">${m.desc}</div>
+        </div>
+        <div class="score-metric-right">
+          <div class="score-metric-val" style="color:${clr}">${val.toFixed(2)}</div>
+          <div class="score-metric-bar">
+            <div class="score-metric-bar-fill" style="width:${pct}%;background:${clr}"></div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
 }
 
 function setMainImg(src, thumbEl) {
