@@ -1808,34 +1808,34 @@ function toggleScoreExp() {
 // Each metric: key shown in col A/B of Score sheet, bahasa label, bahasa description
 const SCORE_METRICS = [
   {
-    key: 0,
+    key: 0, // row index 0 in Score tab
     label: 'Jumlah Penjual Aktif',
     desc: 'Berapa banyak penjual yang berkontribusi lebih dari 1% dari total pendapatan pasar. Semakin banyak penjual aktif, semakin terbukti permintaan produk ini.',
-    maxVal: 1.75,  // was 2
+    maxVal: 1.75,
   },
   {
     key: 1,
     label: 'Dominasi Penjual Teratas',
     desc: 'Berapa persen pasar yang dikuasai oleh 1 penjual terbaik. Skor lebih tinggi berarti pasar lebih merata — tidak dikuasai satu pemain saja.',
-    maxVal: 0.5,   // was 2
+    maxVal: 0.5,
   },
   {
     key: 2,
     label: 'Konsentrasi Top 10 Penjual',
     desc: 'Berapa persen pasar yang dikontrol oleh 10 penjual terbaik. Jika angkanya terlalu tinggi, pasar sudah sangat kompetitif dan sulit ditembus pemain baru.',
-    maxVal: 1.25,  // was 2
+    maxVal: 1.25,
   },
   {
     key: 3,
     label: 'Konsistensi Pendapatan (Mean/Median)',
     desc: 'Perbandingan rata-rata dan median pendapatan penjual. Skor tinggi berarti pendapatan antar penjual lebih merata — peluang sukses lebih konsisten.',
-    maxVal: 0.5,   // was 2
+    maxVal: 0.5,
   },
   {
     key: 4,
     label: 'Rasio Penjual Baru (NUB Median)',
     desc: 'Seberapa baik penjual baru bisa bersaing dibandingkan median pasar. Skor tinggi berarti penjual baru punya peluang nyata mendapatkan pendapatan yang layak.',
-    maxVal: 1,     // was 2
+    maxVal: 1,
   },
 ];
 
@@ -1873,7 +1873,7 @@ function renderScoreExp(scoreRows, totalScore) {
   metricsEl.innerHTML = SCORE_METRICS.map((m, i) => {
     const val   = vals[i] ?? 0;
     const pct   = Math.min(100, (val / m.maxVal) * 100);
-    const clr = val >= m.maxVal * 0.90 ? '#00B14F' : val >= m.maxVal * 0.75 ? '#F5A623' : '#E74C3C';
+    const clr   = val >= m.maxVal * 0.90 ? '#00B14F' : val >= m.maxVal * 0.75 ? '#F5A623' : '#E74C3C';
     return `
       <div class="score-metric">
         <div class="score-metric-left">
