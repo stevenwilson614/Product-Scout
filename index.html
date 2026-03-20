@@ -1288,11 +1288,33 @@ function extractSheetId(url) {
 }
 
 // Fetch any Google Sheet tab as array of row objects
+// ── JSONP fallback: bypasses CORS entirely via script injection ──
+function fetchSheetJsonp(sheetId, tabName) {
+  return new Promise((resolve) => {
+    const cb = '_gs_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+    const timer = setTimeout(() => { cleanup(); resolve(null); }, 10000);
+    function cleanup() { clearTimeout(timer); delete window[cb]; if (script.parentNode) script.parentNode.removeChild(script); }
+    window[cb] = function(raw) {
+      cleanup();
+      try {
+        const cols = raw.table.cols.map(c => c.label);
+        resolve(raw.table.rows
+          .filter(row => row.c && row.c.some(c => c && c.v !== null && c.v !== ''))
+          .map(row => { const obj = {}; row.c.forEach((cell, i) => { obj[cols[i]] = cell ? cell.v : ''; }); return obj; }));
+      } catch(e) { resolve(null); }
+    };
+    const script = document.createElement('script');
+    script.onerror = () => { cleanup(); resolve(null); };
+    script.src = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json_callback;handler:${cb}&sheet=${encodeURIComponent(tabName)}`;
+    document.head.appendChild(script);
+  });
+}
+
 async function fetchSheet(sheetId, tabName) {
   if (!sheetId || sheetId.includes('YOUR_')) return null;
   try {
     const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(tabName)}`;
-    const res  = await fetch(url);
+    const res  = await fetch(url, { credentials: 'omit' });
     const txt  = await res.text();
     // Google wraps the JSON in a callback — strip it
     const json = JSON.parse(txt.substring(47).slice(0, -2));
@@ -1305,8 +1327,8 @@ async function fetchSheet(sheetId, tabName) {
         return obj;
       });
   } catch(e) {
-    console.warn('Sheet fetch failed:', sheetId, tabName, e);
-    return null;
+    console.warn('fetch() failed, trying JSONP fallback:', sheetId, tabName, e.message);
+    return fetchSheetJsonp(sheetId, tabName);
   }
 }
 
