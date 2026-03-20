@@ -484,6 +484,79 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
 .about-cta-btn{background:#fff;color:var(--orange);border:none;border-radius:8px;padding:11px 28px;font-weight:700;font-size:.9rem;cursor:pointer;font-family:'Roboto', 'Noto Sans', sans-serif;transition:transform .15s,box-shadow .15s;}
 .about-cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.15);}
 
+/* ── HOME SCORE EXPLANATION ── */
+.home-score-exp{background:#fff;border:1.5px solid #f0ebe4;border-radius:12px;overflow:hidden;margin:16px 0 8px;}
+.home-score-exp-header{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;background:#faf7f4;cursor:pointer;user-select:none;border-bottom:1px solid #f0ebe4;}
+.home-score-exp-header:hover{background:#f5f0ea;}
+.home-score-exp-title{font-size:.84rem;font-weight:700;color:#333;display:flex;align-items:center;gap:8px;}
+.home-score-exp-body{padding:14px 16px;display:none;}
+.home-score-exp-body.open{display:block;}
+.hscore-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px;}
+@media(max-width:640px){.hscore-grid{grid-template-columns:repeat(2,1fr);}}
+.hscore-item{background:#faf7f4;border-radius:8px;padding:10px 12px;border-left:3px solid var(--orange);}
+.hscore-item-name{font-size:.78rem;font-weight:700;color:#222;margin-bottom:3px;}
+.hscore-item-desc{font-size:.72rem;color:var(--tl);line-height:1.5;}
+.hscore-note{margin-top:12px;font-size:.78rem;color:var(--tl);background:#fff8f5;border-radius:8px;padding:10px 12px;border-left:3px solid var(--amber);}
+
+/* ── FILTER PANEL ── */
+.filter-panel{background:#fff;border-radius:var(--r);padding:14px 16px;margin-bottom:14px;box-shadow:var(--sh);}
+.filter-toggle-btn{display:flex;align-items:center;gap:7px;font-size:.83rem;font-weight:600;color:#333;cursor:pointer;background:none;border:none;font-family:inherit;padding:0;}
+.filter-toggle-btn:hover{color:var(--orange);}
+.filter-body{display:none;margin-top:14px;border-top:1px solid #f0ebe4;padding-top:14px;}
+.filter-body.open{display:block;}
+.filter-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:560px){.filter-grid{grid-template-columns:1fr;}}
+.filter-group label{font-size:.75rem;font-weight:700;color:var(--tl);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px;}
+.filter-range-row{display:flex;align-items:center;gap:6px;}
+.filter-input{width:100%;border:1.5px solid #e8e0d8;border-radius:6px;padding:6px 10px;font-size:.82rem;font-family:inherit;color:#111;outline:none;transition:border-color .15s;}
+.filter-input:focus{border-color:var(--orange);}
+.filter-sep{font-size:.78rem;color:var(--tl);flex-shrink:0;}
+.filter-row-btns{display:flex;justify-content:flex-end;gap:8px;margin-top:14px;}
+.filter-apply-btn{background:var(--orange);color:#fff;border:none;border-radius:6px;padding:7px 18px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;}
+.filter-apply-btn:hover{background:#d43a1f;}
+.filter-reset-btn{background:none;border:1.5px solid #e8e0d8;border-radius:6px;padding:7px 14px;font-size:.82rem;font-weight:600;color:var(--tm);cursor:pointer;font-family:inherit;}
+.filter-reset-btn:hover{border-color:#ccc;}
+
+/* ── SHARE MODAL ── */
+.share-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;display:flex;align-items:flex-end;justify-content:center;}
+@media(min-width:480px){.share-modal-overlay{align-items:center;}}
+.share-modal{background:#fff;border-radius:16px 16px 0 0;width:100%;max-width:420px;padding:20px;box-shadow:0 -4px 32px rgba(0,0,0,.18);}
+@media(min-width:480px){.share-modal{border-radius:16px;}}
+.share-modal-title{font-weight:700;font-size:1rem;color:#111;margin-bottom:4px;}
+.share-modal-sub{font-size:.8rem;color:var(--tl);margin-bottom:16px;}
+.share-options{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.share-option{display:flex;flex-direction:column;align-items:center;gap:7px;padding:14px 10px;border:1.5px solid #f0ebe4;border-radius:10px;cursor:pointer;background:#faf7f4;transition:border-color .15s,background .15s;font-size:.78rem;font-weight:600;color:#333;text-decoration:none;}
+.share-option:hover{border-color:var(--orange);background:var(--orange-light);}
+.share-option-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;}
+.share-option.wa .share-option-icon{background:#dcf8c6;}
+.share-option.em .share-option-icon{background:#EFF6FF;}
+.share-option.tw .share-option-icon{background:#e8f5fd;}
+.share-option.cp .share-option-icon{background:#f0ebe4;}
+.share-modal-close{width:100%;margin-top:12px;padding:10px;border:1.5px solid #e8e0d8;border-radius:8px;background:none;font-size:.85rem;font-weight:600;color:var(--tm);cursor:pointer;font-family:inherit;}
+.share-modal-close:hover{background:#faf7f4;}
+.copy-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#111;color:#fff;border-radius:8px;padding:9px 20px;font-size:.82rem;font-weight:600;z-index:2000;opacity:0;transition:opacity .25s;}
+.copy-toast.show{opacity:1;}
+
+/* ── EMAIL SIGNUP ── */
+.email-signup-section{background:var(--grad);padding:40px 20px;text-align:center;}
+.email-signup-inner{max-width:540px;margin:0 auto;}
+.email-signup-title{font-family:'Roboto','Noto Sans',sans-serif;font-weight:900;font-size:1.4rem;color:#fff;margin-bottom:8px;}
+.email-signup-sub{font-size:.9rem;color:rgba(255,255,255,.88);margin-bottom:22px;line-height:1.6;}
+.email-signup-form{display:flex;gap:8px;max-width:420px;margin:0 auto;}
+@media(max-width:480px){.email-signup-form{flex-direction:column;}}
+.email-signup-input{flex:1;border:none;border-radius:8px;padding:11px 16px;font-size:.88rem;font-family:inherit;outline:none;}
+.email-signup-btn{background:#111;color:#fff;border:none;border-radius:8px;padding:11px 20px;font-size:.88rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:background .15s;}
+.email-signup-btn:hover{background:#333;}
+.email-signup-note{font-size:.73rem;color:rgba(255,255,255,.65);margin-top:10px;}
+
+/* ── FREE/OPEN SOURCE BANNER ── */
+.free-banner{background:var(--green-light);border:1.5px solid #b8f0d0;border-radius:var(--r);padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.free-banner-icon{font-size:1.4rem;flex-shrink:0;}
+.free-banner-text{font-size:.82rem;color:#1a6b3a;line-height:1.5;}
+.free-banner-text strong{color:#0d5229;}
+.free-banner-text a{color:#0d5229;font-weight:700;}
+
+
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
 </style>
 </head>
@@ -508,9 +581,10 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
   <div class="search-suggestions" id="search-suggestions"></div>
   </div>
   <div class="nav-right">
-    <a class="nav-link" onclick="showPage('discover')">Discover</a>
+    <a class="nav-link" onclick="showPage('discover')">Products</a>
     <a class="nav-link" onclick="showPage('about')">Tentang</a>
     <a class="nav-link" onclick="openFeedback()">Feedback</a>
+    <a class="nav-link" href="https://github.com/stevenwilson614/Product-Scout" target="_blank" rel="noopener" title="Open Source on GitHub" style="font-size:.8rem;opacity:.85;">⭐ Open Source</a>
     <a class="nav-link nav-community" href="https://chat.whatsapp.com/YOUR_GROUP_LINK" target="_blank" rel="noopener">💬 Komunitas</a>
   </div>
 </nav>
@@ -577,6 +651,44 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
         <div class="sec-title">Categories</div>
         <span class="see-all" onclick="showPage('discover')">See All</span>
       </div>
+
+      <!-- VIABILITY SCORE EXPLANATION ACCORDION -->
+      <div class="home-score-exp">
+        <div class="home-score-exp-header" onclick="toggleHomeScoreExp()">
+          <span class="home-score-exp-title">⭐ What is the Viability Score? <span style="font-weight:400;color:var(--tl);font-size:.75rem;">(tap to learn more)</span></span>
+          <span id="home-score-chevron" style="font-size:.75rem;color:var(--tl);transition:transform .2s;">▼</span>
+        </div>
+        <div class="home-score-exp-body" id="home-score-exp-body">
+          <p style="font-size:.82rem;color:#444;margin-bottom:12px;line-height:1.6;">Every product is rated <strong>0–10</strong>. A higher score means it's easier to enter the market with strong demand and manageable competition. Here's what goes into it:</p>
+          <div class="hscore-grid">
+            <div class="hscore-item">
+              <div class="hscore-item-name">💰 Revenue Potential</div>
+              <div class="hscore-item-desc">How much active sellers earn per month on average in this category.</div>
+            </div>
+            <div class="hscore-item">
+              <div class="hscore-item-name">📦 Sales Volume</div>
+              <div class="hscore-item-desc">Units sold per month — high volume signals consistent demand.</div>
+            </div>
+            <div class="hscore-item">
+              <div class="hscore-item-name">🏪 Active Sellers</div>
+              <div class="hscore-item-desc">Moderate seller count = real demand without oversaturation.</div>
+            </div>
+            <div class="hscore-item">
+              <div class="hscore-item-name">📊 Revenue Consistency</div>
+              <div class="hscore-item-desc">How stable income is across sellers — predictable markets score higher.</div>
+            </div>
+            <div class="hscore-item">
+              <div class="hscore-item-name">🚀 Barrier to Entry</div>
+              <div class="hscore-item-desc">Low minimum order and fair sourcing cost = easier to start.</div>
+            </div>
+            <div class="hscore-item">
+              <div class="hscore-item-name">📈 Market Trend</div>
+              <div class="hscore-item-desc">Growing listings and new sellers finding success scores higher.</div>
+            </div>
+          </div>
+          <div class="hscore-note">⚠️ Score is a guide, not a guarantee. Always validate with your own research before investing.</div>
+        </div>
+      </div>
       <div class="cat-grid" id="home-cats"></div>
 
       <div class="sec-head">
@@ -593,11 +705,59 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
 ════════════════════════════════════ -->
 <div class="page" id="page-discover">
   <div class="disc-hero">
-    <p>Discover high-potential products to sell — sorted by viability score</p>
-    <span class="freshness-badge">🔄 Data diperbarui: Maret 2026</span>
+    <p>Browse all products — filter by category, price, and revenue potential</p>
+    <span class="freshness-badge">🔄 Data updated: March 20, 2026</span>
   </div>
   <div class="disc-main">
+    <div class="free-banner">
+      <span class="free-banner-icon">🆓</span>
+      <span class="free-banner-text"><strong>100% Free, Forever.</strong> No account needed. No paywalls. Product Scout is <a href="https://github.com/stevenwilson614/Product-Scout" target="_blank" rel="noopener">open source</a> — built for the community, by the community.</span>
+    </div>
     <div class="pills" id="disc-pills"></div>
+    <div class="filter-panel">
+      <button class="filter-toggle-btn" onclick="toggleFilterPanel()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+        Filters <span id="filter-count-badge" style="display:none;background:var(--orange);color:#fff;border-radius:10px;padding:1px 7px;font-size:.7rem;margin-left:4px;"></span>
+        <span id="filter-panel-chevron" style="font-size:.72rem;color:var(--tl);margin-left:4px;">▼</span>
+      </button>
+      <div class="filter-body" id="filter-body">
+        <div class="filter-grid">
+          <div class="filter-group">
+            <label>Selling Price (Rp)</label>
+            <div class="filter-range-row">
+              <input class="filter-input" type="number" id="f-price-min" placeholder="Min" min="0" step="1000">
+              <span class="filter-sep">–</span>
+              <input class="filter-input" type="number" id="f-price-max" placeholder="Max" min="0" step="1000">
+            </div>
+          </div>
+          <div class="filter-group">
+            <label>Monthly Revenue (Rp)</label>
+            <div class="filter-range-row">
+              <input class="filter-input" type="number" id="f-rev-min" placeholder="Min" min="0" step="100000">
+              <span class="filter-sep">–</span>
+              <input class="filter-input" type="number" id="f-rev-max" placeholder="Max" min="0" step="100000">
+            </div>
+          </div>
+          <div class="filter-group">
+            <label>Category</label>
+            <select class="filter-input" id="f-category" onchange="applyFilters()">
+              <option value="all">All Categories</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Min Viability Score</label>
+            <div class="filter-range-row">
+              <input class="filter-input" type="number" id="f-score-min" placeholder="0" min="0" max="10" step="0.5">
+              <span class="filter-sep">/ 10</span>
+            </div>
+          </div>
+        </div>
+        <div class="filter-row-btns">
+          <button class="filter-reset-btn" onclick="resetFilters()">Reset</button>
+          <button class="filter-apply-btn" onclick="applyFilters()">Apply Filters</button>
+        </div>
+      </div>
+    </div>
     <div class="toolbar">
       <div class="toolbar-left"><span id="product-count">0</span> Products Found</div>
       <div style="display:flex;align-items:center;gap:8px;">
@@ -714,9 +874,9 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
                 <div class="det-stat-pill-val" id="d-score2">—</div>
               </div>
             </div>
-            <button class="share-btn" onclick="shareProduct()">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.146 17.04c-.24.67-.88 1.224-1.637 1.466-.757.242-1.642.18-2.367-.018-.724-.198-1.367-.488-1.956-.817a12.347 12.347 0 01-3.17-2.73 12.347 12.347 0 01-1.805-3.37c-.198-.724-.26-1.609-.018-2.366.242-.757.796-1.397 1.466-1.637.225-.08.46-.12.694-.12.18 0 .358.02.528.06.38.087.702.312.9.63l.9 1.563c.198.344.247.75.136 1.13-.112.38-.364.704-.706.908l-.348.2c.243.49.566.94.958 1.333.393.393.843.716 1.333.958l.2-.348c.204-.342.528-.594.908-.706.38-.111.786-.062 1.13.136l1.563.9c.318.198.543.52.63.9.04.17.06.348.06.528 0 .234-.04.469-.12.694z"/></svg>
-              Bagikan ke WhatsApp
+            <button class="share-btn" onclick="openShareModal()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              Share This Opportunity
             </button>
           </div>
 
@@ -805,6 +965,22 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
   </div><!-- end det-page-wrap -->
 </div>
 
+
+<!-- ════════════════════════════════════
+     EMAIL SIGNUP SECTION
+════════════════════════════════════ -->
+<div class="email-signup-section" id="email-signup">
+  <div class="email-signup-inner">
+    <div class="email-signup-title">📬 Get Weekly Product Alerts</div>
+    <div class="email-signup-sub">Every week we update our list with new high-potential products. Be the first to know — free, no spam, unsubscribe anytime.</div>
+    <form class="email-signup-form" onsubmit="handleEmailSignup(event)">
+      <input class="email-signup-input" type="email" id="signup-email" placeholder="your@email.com" required>
+      <button class="email-signup-btn" type="submit">Notify Me</button>
+    </form>
+    <div class="email-signup-note">🔒 We respect your privacy. No spam, ever. You can unsubscribe at any time.</div>
+  </div>
+</div>
+
 <!-- ════════════════════════════════════
      ABOUT PAGE — Tentang Product Scout
 ════════════════════════════════════ -->
@@ -869,7 +1045,7 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
       </div>
       <div class="trust-row" style="margin-top:20px;">
         <div class="trust-badge"> Data dari listing publik Shopee</div>
-        <div class="trust-badge"><span class="trust-badge-icon">🔄</span> Diperbarui setiap bulan</div>
+        <div class="trust-badge"><span class="trust-badge-icon">🔄</span> Last updated: March 20, 2026</div>
         <div class="trust-badge"><span class="trust-badge-icon">📍</span> Khusus pasar Indonesia</div>
         <div class="trust-badge"><span class="trust-badge-icon">🔢</span> Berbasis data, bukan opini</div>
       </div>
@@ -979,11 +1155,36 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
     <div class="about-cta-block">
       <div class="about-cta-title">Siap menemukan produk pertamamu? 🚀</div>
       <div class="about-cta-sub">Jelajahi ratusan produk dengan data lengkap — gratis, selamanya.</div>
-      <button class="about-cta-btn" onclick="showPage('discover')">Mulai Riset Sekarang →</button>
+      <button class="about-cta-btn" onclick="showPage('discover')">Browse Products — It's Free →</button>
     </div>
 
   </div>
 </div>
+
+
+<!-- SHARE MODAL -->
+<div class="share-modal-overlay" id="share-modal-overlay" style="display:none;" onclick="closeShareModal(event)">
+  <div class="share-modal">
+    <div class="share-modal-title">Share This Product</div>
+    <div class="share-modal-sub" id="share-modal-product-name"></div>
+    <div class="share-options">
+      <a class="share-option wa" onclick="doShare('wa')">
+        <span class="share-option-icon">💬</span>WhatsApp
+      </a>
+      <a class="share-option em" onclick="doShare('email')">
+        <span class="share-option-icon">📧</span>Email
+      </a>
+      <a class="share-option tw" onclick="doShare('twitter')">
+        <span class="share-option-icon">𝕏</span>Twitter / X
+      </a>
+      <a class="share-option cp" onclick="doShare('copy')">
+        <span class="share-option-icon">🔗</span>Copy Link
+      </a>
+    </div>
+    <button class="share-modal-close" onclick="closeShareModal()">Cancel</button>
+  </div>
+</div>
+<div class="copy-toast" id="copy-toast">Link copied!</div>
 
 <!-- FEEDBACK TAB — always visible on right side -->
 <div class="feedback-tab" onclick="openFeedback()">
@@ -1184,6 +1385,7 @@ async function loadData() {
   renderHomeGrid();
   renderPills();
   renderDiscGrid();
+  populateCategoryFilter();
 
   // Fetch product images from seller sheets in background
   fetchProductImages();
@@ -1424,11 +1626,22 @@ function onSearchKey(e) {
 }
 
 function applyFilters() {
+  const priceMin = parseFloat(document.getElementById('f-price-min')?.value) || 0;
+  const priceMax = parseFloat(document.getElementById('f-price-max')?.value) || Infinity;
+  const revMin   = parseFloat(document.getElementById('f-rev-min')?.value)   || 0;
+  const revMax   = parseFloat(document.getElementById('f-rev-max')?.value)   || Infinity;
+  const scoreMin = parseFloat(document.getElementById('f-score-min')?.value) || 0;
+  const fCat     = document.getElementById('f-category')?.value || 'all';
+  if (fCat !== 'all') activeCat = fCat;
   filtered = allProducts.filter(p => {
     const nameMatch  = !searchQ || p.name.toLowerCase().includes(searchQ);
     const catMatch   = activeCat === 'all' || p.category === activeCat;
-    return nameMatch && catMatch;
+    const priceMatch = (!priceMin || p.medianPrice >= priceMin) && p.medianPrice <= priceMax;
+    const revMatch   = (!revMin || p.upToRevenue >= revMin) && p.upToRevenue <= revMax;
+    const scoreMatch = p.score >= scoreMin;
+    return nameMatch && catMatch && priceMatch && revMatch && scoreMatch;
   });
+  updateFilterBadge();
   sortProducts();
 }
 
@@ -2045,6 +2258,141 @@ function setMainImg(src, thumbEl) {
   document.querySelectorAll('.det-thumb').forEach(t => t.classList.remove('active'));
   thumbEl.classList.add('active');
 }
+
+
+// ════════════════════════════════════════════════════════════
+//  HOME SCORE EXPLANATION
+// ════════════════════════════════════════════════════════════
+function toggleHomeScoreExp() {
+  const body = document.getElementById('home-score-exp-body');
+  const chevron = document.getElementById('home-score-chevron');
+  const open = body.classList.toggle('open');
+  chevron.style.transform = open ? 'rotate(180deg)' : '';
+}
+
+// ════════════════════════════════════════════════════════════
+//  FILTER PANEL
+// ════════════════════════════════════════════════════════════
+function toggleFilterPanel() {
+  const body = document.getElementById('filter-body');
+  const chevron = document.getElementById('filter-panel-chevron');
+  const open = body.classList.toggle('open');
+  chevron.style.transform = open ? 'rotate(180deg)' : '';
+}
+
+function populateCategoryFilter() {
+  const sel = document.getElementById('f-category');
+  if (!sel || !allProducts.length) return;
+  const cats = [...new Set(allProducts.map(p => p.category))].sort();
+  cats.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    sel.appendChild(opt);
+  });
+}
+
+function resetFilters() {
+  document.getElementById('f-price-min').value = '';
+  document.getElementById('f-price-max').value = '';
+  document.getElementById('f-rev-min').value = '';
+  document.getElementById('f-rev-max').value = '';
+  document.getElementById('f-category').value = 'all';
+  document.getElementById('f-score-min').value = '';
+  activeCat = 'all';
+  updateFilterBadge();
+  applyFilters();
+  renderPills();
+}
+
+function updateFilterBadge() {
+  const priceMin = parseFloat(document.getElementById('f-price-min')?.value) || 0;
+  const priceMax = parseFloat(document.getElementById('f-price-max')?.value) || 0;
+  const revMin   = parseFloat(document.getElementById('f-rev-min')?.value)   || 0;
+  const revMax   = parseFloat(document.getElementById('f-rev-max')?.value)   || 0;
+  const scoreMin = parseFloat(document.getElementById('f-score-min')?.value) || 0;
+  const cat      = document.getElementById('f-category')?.value || 'all';
+  let count = 0;
+  if (priceMin || priceMax) count++;
+  if (revMin || revMax) count++;
+  if (scoreMin) count++;
+  if (cat !== 'all') count++;
+  const badge = document.getElementById('filter-count-badge');
+  if (badge) { badge.textContent = count; badge.style.display = count ? 'inline' : 'none'; }
+}
+
+// ════════════════════════════════════════════════════════════
+//  SHARE MODAL
+// ════════════════════════════════════════════════════════════
+let _shareProductName = '';
+let _shareProductScore = '';
+let _shareRevLo = '';
+let _shareRevHi = '';
+
+function openShareModal() {
+  _shareProductName  = document.getElementById('d-name')?.textContent.trim()  || '';
+  _shareProductScore = document.getElementById('d-score')?.textContent.trim() || '';
+  _shareRevLo = document.getElementById('d-rev-lo')?.textContent.trim() || '';
+  _shareRevHi = document.getElementById('d-rev-hi')?.textContent.trim() || '';
+  const sub = document.getElementById('share-modal-product-name');
+  if (sub) sub.textContent = _shareProductName ? '\u201C' + _shareProductName + '\u201D' : '';
+  document.getElementById('share-modal-overlay').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeShareModal(e) {
+  if (e && e.target !== document.getElementById('share-modal-overlay')) return;
+  document.getElementById('share-modal-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function doShare(type) {
+  const url = 'https://stevenwilson614.github.io/Product-Scout/';
+  const name  = _shareProductName;
+  const score = _shareProductScore;
+  const revRange = (_shareRevLo && _shareRevHi) ? _shareRevLo + ' \u2013 ' + _shareRevHi + '/mo' : '';
+  const textLines = [
+    '\uD83D\uDED7 Found a great Shopee product opportunity!',
+    name ? '\uD83D\uDCE6 ' + name : '',
+    score ? '\u2B50 Viability Score: ' + score + '/10' : '',
+    revRange ? '\uD83D\uDCB0 Est. Revenue: ' + revRange : '',
+    '',
+    '\uD83D\uDD17 Check it free: ' + url
+  ].filter(Boolean).join('\n');
+
+  if (type === 'wa') {
+    window.open('https://wa.me/?text=' + encodeURIComponent(textLines), '_blank');
+  } else if (type === 'email') {
+    const subject = encodeURIComponent('Check out this Shopee product: ' + name);
+    const body = encodeURIComponent(textLines);
+    window.open('mailto:?subject=' + subject + '&body=' + body, '_blank');
+  } else if (type === 'twitter') {
+    const tweet = '\uD83D\uDED7 Found a great Shopee product on @ProductScout!\n' +
+      (name ? '\uD83D\uDCE6 ' + name + '\n' : '') +
+      (score ? '\u2B50 Score: ' + score + '/10\n' : '') +
+      '\uD83D\uDD17 ' + url;
+    window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweet), '_blank');
+  } else if (type === 'copy') {
+    navigator.clipboard.writeText(url).then(() => {
+      const toast = document.getElementById('copy-toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    });
+  }
+  closeShareModal();
+}
+
+// ════════════════════════════════════════════════════════════
+//  EMAIL SIGNUP
+// ════════════════════════════════════════════════════════════
+function handleEmailSignup(e) {
+  e.preventDefault();
+  const email = document.getElementById('signup-email').value;
+  // TODO: Replace this URL with your Tally form or Mailchimp endpoint
+  const tallyUrl = 'https://tally.so/r/YOUR_FORM_ID?email=' + encodeURIComponent(email);
+  window.open(tallyUrl, '_blank');
+  document.getElementById('signup-email').value = '';
+}
+
 
 function shareProduct() {
   const name = document.getElementById('d-name') ? document.getElementById('d-name').textContent.trim() : '';
