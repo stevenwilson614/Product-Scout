@@ -2052,17 +2052,11 @@ function shareProduct() {
   const revLo = document.getElementById('d-rev-lo') ? document.getElementById('d-rev-lo').textContent.trim() : '';
   const revHi = document.getElementById('d-rev-hi') ? document.getElementById('d-rev-hi').textContent.trim() : '';
   const url = 'https://stevenwilson614.github.io/Product-Scout/';
-  let text = '🛍️ *Cek peluang produk ini di Product Scout!*
-
-';
-  if (name) text += '📦 ' + name + '
-';
-  if (score) text += '⭐ Viability Score: ' + score + '/10
-';
-  if (revLo && revHi) text += '💰 Estimasi Pendapatan: ' + revLo + ' – ' + revHi + '/bln
-';
-  text += '
-🔗 Cek selengkapnya (gratis): ' + url;
+  let text = '\uD83D\uDED7 *Cek peluang produk ini di Product Scout!*\n\n';
+  if (name) text += '\uD83D\uDCE6 ' + name + '\n';
+  if (score) text += '\u2B50 Viability Score: ' + score + '/10\n';
+  if (revLo && revHi) text += '\uD83D\uDCB0 Estimasi Pendapatan: ' + revLo + ' \u2013 ' + revHi + '/bln\n';
+  text += '\n\uD83D\uDD17 Cek selengkapnya (gratis): ' + url;
   window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
 }
 
