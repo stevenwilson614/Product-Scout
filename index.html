@@ -498,24 +498,25 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
 .hscore-item-desc{font-size:.72rem;color:var(--tl);line-height:1.5;}
 .hscore-note{margin-top:12px;font-size:.78rem;color:var(--tl);background:#fff8f5;border-radius:8px;padding:10px 12px;border-left:3px solid var(--amber);}
 
-/* ── FILTER PANEL ── */
-.filter-panel{background:#fff;border-radius:var(--r);padding:14px 16px;margin-bottom:14px;box-shadow:var(--sh);}
-.filter-toggle-btn{display:flex;align-items:center;gap:7px;font-size:.83rem;font-weight:600;color:#333;cursor:pointer;background:none;border:none;font-family:inherit;padding:0;}
-.filter-toggle-btn:hover{color:var(--orange);}
-.filter-body{display:none;margin-top:14px;border-top:1px solid #f0ebe4;padding-top:14px;}
-.filter-body.open{display:block;}
-.filter-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
-@media(max-width:560px){.filter-grid{grid-template-columns:1fr;}}
-.filter-group label{font-size:.75rem;font-weight:700;color:var(--tl);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px;}
-.filter-range-row{display:flex;align-items:center;gap:6px;}
-.filter-input{width:100%;border:1.5px solid #e8e0d8;border-radius:6px;padding:6px 10px;font-size:.82rem;font-family:inherit;color:#111;outline:none;transition:border-color .15s;}
+/* ── FILTER INLINE POPUP ── */
+.filter-inline-wrap{position:relative;}
+.filter-inline-btn{display:flex;align-items:center;gap:5px;font-size:.82rem;font-weight:600;color:#333;cursor:pointer;background:#fff;border:1.5px solid #e8e0d8;border-radius:7px;padding:5px 11px;font-family:inherit;transition:border-color .15s,color .15s;}
+.filter-inline-btn:hover,.filter-inline-btn.active{border-color:var(--orange);color:var(--orange);}
+.filter-popup{display:none;position:absolute;top:calc(100% + 6px);left:0;z-index:200;background:#fff;border-radius:10px;box-shadow:0 4px 24px rgba(0,0,0,.13);padding:16px;width:290px;border:1px solid #ede7df;}
+.filter-popup.open{display:block;}
+.filter-popup-group{margin-bottom:12px;}
+.filter-popup-group:last-child{margin-bottom:0;}
+.filter-popup-group label{font-size:.73rem;font-weight:700;color:var(--tl);text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:5px;}
+.filter-range-row{display:flex;align-items:center;gap:5px;}
+.filter-input{width:100%;border:1.5px solid #e8e0d8;border-radius:6px;padding:5px 9px;font-size:.81rem;font-family:inherit;color:#111;outline:none;transition:border-color .15s;box-sizing:border-box;}
 .filter-input:focus{border-color:var(--orange);}
 .filter-sep{font-size:.78rem;color:var(--tl);flex-shrink:0;}
-.filter-row-btns{display:flex;justify-content:flex-end;gap:8px;margin-top:14px;}
-.filter-apply-btn{background:var(--orange);color:#fff;border:none;border-radius:6px;padding:7px 18px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;}
+.filter-popup-btns{display:flex;justify-content:flex-end;gap:7px;margin-top:13px;border-top:1px solid #f0ebe4;padding-top:12px;}
+.filter-apply-btn{background:var(--orange);color:#fff;border:none;border-radius:6px;padding:6px 16px;font-size:.81rem;font-weight:700;cursor:pointer;font-family:inherit;}
 .filter-apply-btn:hover{background:#d43a1f;}
-.filter-reset-btn{background:none;border:1.5px solid #e8e0d8;border-radius:6px;padding:7px 14px;font-size:.82rem;font-weight:600;color:var(--tm);cursor:pointer;font-family:inherit;}
+.filter-reset-btn{background:none;border:1.5px solid #e8e0d8;border-radius:6px;padding:6px 12px;font-size:.81rem;font-weight:600;color:var(--tm);cursor:pointer;font-family:inherit;}
 .filter-reset-btn:hover{border-color:#ccc;}
+@media(max-width:480px){.filter-popup{width:calc(100vw - 32px);left:0;}}
 
 /* ── SHARE MODAL ── */
 .share-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;display:flex;align-items:flex-end;justify-content:center;}
@@ -727,56 +728,53 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
   <div class="disc-main">
     <div class="free-banner">
       <span class="free-banner-icon">🆓</span>
-      <span class="free-banner-text"><strong>100% Free, Forever.</strong> No account needed. No paywalls. Product Scout is <a href="https://github.com/stevenwilson614/Product-Scout" target="_blank" rel="noopener">open source</a> — built for the community, by the community.</span>
+      <span class="free-banner-text"><strong>100% Gratis, Selamanya.</strong> Tidak perlu akun. Tidak ada biaya tersembunyi. Dibuat untuk para penjual Indonesia.</span>
     </div>
     <div class="pills" id="disc-pills"></div>
-    <div class="filter-panel">
-      <button class="filter-toggle-btn" onclick="toggleFilterPanel()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
-        Filters <span id="filter-count-badge" style="display:none;background:var(--orange);color:#fff;border-radius:10px;padding:1px 7px;font-size:.7rem;margin-left:4px;"></span>
-        <span id="filter-panel-chevron" style="font-size:.72rem;color:var(--tl);margin-left:4px;">▼</span>
-      </button>
-      <div class="filter-body" id="filter-body">
-        <div class="filter-grid">
-          <div class="filter-group">
-            <label>Selling Price (Rp)</label>
-            <div class="filter-range-row">
-              <input class="filter-input" type="number" id="f-price-min" placeholder="Min" min="0" step="1000">
-              <span class="filter-sep">–</span>
-              <input class="filter-input" type="number" id="f-price-max" placeholder="Max" min="0" step="1000">
-            </div>
-          </div>
-          <div class="filter-group">
-            <label>Monthly Revenue (Rp)</label>
-            <div class="filter-range-row">
-              <input class="filter-input" type="number" id="f-rev-min" placeholder="Min" min="0" step="100000">
-              <span class="filter-sep">–</span>
-              <input class="filter-input" type="number" id="f-rev-max" placeholder="Max" min="0" step="100000">
-            </div>
-          </div>
-          <div class="filter-group">
-            <label>Category</label>
-            <select class="filter-input" id="f-category" onchange="applyFilters()">
-              <option value="all">All Categories</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label>Min Viability Score</label>
-            <div class="filter-range-row">
-              <input class="filter-input" type="number" id="f-score-min" placeholder="0" min="0" max="10" step="0.5">
-              <span class="filter-sep">/ 10</span>
-            </div>
-          </div>
-        </div>
-        <div class="filter-row-btns">
-          <button class="filter-reset-btn" onclick="resetFilters()">Reset</button>
-          <button class="filter-apply-btn" onclick="applyFilters()">Apply Filters</button>
-        </div>
-      </div>
-    </div>
     <div class="toolbar">
       <div class="toolbar-left"><span id="product-count">0</span> Products Found</div>
       <div style="display:flex;align-items:center;gap:8px;">
+        <div class="filter-inline-wrap" id="filter-inline-wrap">
+          <button class="filter-inline-btn" onclick="toggleFilterPanel()" id="filter-inline-btn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+            Filter <span id="filter-count-badge" style="display:none;background:var(--orange);color:#fff;border-radius:10px;padding:0 6px;font-size:.68rem;margin-left:3px;"></span>
+          </button>
+          <div class="filter-popup" id="filter-body">
+            <div class="filter-popup-group">
+              <label>Harga Jual (Rp)</label>
+              <div class="filter-range-row">
+                <input class="filter-input" type="number" id="f-price-min" placeholder="Min" min="0" step="1000">
+                <span class="filter-sep">–</span>
+                <input class="filter-input" type="number" id="f-price-max" placeholder="Max" min="0" step="1000">
+              </div>
+            </div>
+            <div class="filter-popup-group">
+              <label>Revenue Bulanan (Rp)</label>
+              <div class="filter-range-row">
+                <input class="filter-input" type="number" id="f-rev-min" placeholder="Min" min="0" step="100000">
+                <span class="filter-sep">–</span>
+                <input class="filter-input" type="number" id="f-rev-max" placeholder="Max" min="0" step="100000">
+              </div>
+            </div>
+            <div class="filter-popup-group">
+              <label>Kategori</label>
+              <select class="filter-input" id="f-category">
+                <option value="all">Semua Kategori</option>
+              </select>
+            </div>
+            <div class="filter-popup-group">
+              <label>Skor Viabilitas Min</label>
+              <div class="filter-range-row">
+                <input class="filter-input" type="number" id="f-score-min" placeholder="0" min="0" max="10" step="0.5">
+                <span class="filter-sep">/ 10</span>
+              </div>
+            </div>
+            <div class="filter-popup-btns">
+              <button class="filter-reset-btn" onclick="resetFilters()">Reset</button>
+              <button class="filter-apply-btn" onclick="applyFilters()">Terapkan</button>
+            </div>
+          </div>
+        </div>
         <span style="font-size:.8rem;color:var(--tm);font-weight:500;">Sort:</span>
         <select class="sort-select" id="sort-select" onchange="sortProducts()">
           <option value="score">Viability Score</option>
@@ -2347,10 +2345,23 @@ function toggleHomeScoreExp() {
 //  FILTER PANEL
 // ════════════════════════════════════════════════════════════
 function toggleFilterPanel() {
-  const body = document.getElementById('filter-body');
-  const chevron = document.getElementById('filter-panel-chevron');
-  const open = body.classList.toggle('open');
-  chevron.style.transform = open ? 'rotate(180deg)' : '';
+  const popup = document.getElementById('filter-body');
+  const btn = document.getElementById('filter-inline-btn');
+  const open = popup.classList.toggle('open');
+  btn.classList.toggle('active', open);
+  if (open) {
+    // close on outside click
+    setTimeout(() => {
+      document.addEventListener('click', function outsideClick(e) {
+        const wrap = document.getElementById('filter-inline-wrap');
+        if (wrap && !wrap.contains(e.target)) {
+          popup.classList.remove('open');
+          btn.classList.remove('active');
+          document.removeEventListener('click', outsideClick);
+        }
+      });
+    }, 0);
+  }
 }
 
 function populateCategoryFilter() {
