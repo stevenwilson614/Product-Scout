@@ -580,6 +580,26 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
 #fb-float.show{opacity:1;pointer-events:auto;transform:translateY(0);}
 #fb-float:hover{background:#d43a1f;}
 
+/* ── SELLER ACCURACY VOTE ── */
+.seller-vote-wrap{max-width:1200px;margin:0 auto;padding:0 20px 20px;}
+.seller-vote-box{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:24px 28px;}
+.seller-vote-title{font-size:1rem;font-weight:700;color:var(--td);margin-bottom:4px;}
+.seller-vote-sub{font-size:.85rem;color:var(--tm);margin-bottom:20px;}
+.vote-btn-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.vote-btn{display:flex;align-items:center;gap:8px;padding:10px 22px;border-radius:50px;border:2px solid var(--border);background:#fafafa;font-size:.9rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .18s;color:var(--td);}
+.vote-btn:hover{border-color:var(--orange);background:var(--orange-light);}
+.vote-btn.voted-up{border-color:#27AE60;background:#E8F8EE;color:#27AE60;}
+.vote-btn.voted-down{border-color:#E74C3C;background:#FDECEC;color:#E74C3C;}
+.vote-btn svg{flex-shrink:0;}
+.vote-count{font-size:.82rem;font-weight:700;}
+.vote-result-msg{font-size:.82rem;color:var(--tm);margin-left:4px;display:none;}
+.vote-result-msg.show{display:inline;}
+.vote-bar-wrap{margin-top:18px;display:none;}
+.vote-bar-wrap.show{display:block;}
+.vote-bar-labels{display:flex;justify-content:space-between;font-size:.78rem;color:var(--tm);margin-bottom:6px;}
+.vote-bar-track{height:8px;background:#f0ebe4;border-radius:4px;overflow:hidden;}
+.vote-bar-fill{height:100%;background:linear-gradient(90deg,#27AE60,#5dde8d);border-radius:4px;transition:width .4s ease;}
+
 </style>
 </head>
 <body>
@@ -965,6 +985,36 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
             </tr></thead>
             <tbody id="sellers-tbody"></tbody>
           </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SELLER ACCURACY VOTE -->
+    <div class="seller-vote-wrap">
+      <div class="seller-vote-box">
+        <div class="seller-vote-title">Are you a seller? Is this data accurate?</div>
+        <div class="seller-vote-sub">Based on your experience selling this type of product, how accurate does this data feel to you?</div>
+        <div class="vote-btn-row">
+          <button class="vote-btn" id="vote-up-btn" onclick="castVote('up')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+            Looks Accurate
+            <span class="vote-count" id="vote-up-count">0</span>
+          </button>
+          <button class="vote-btn" id="vote-down-btn" onclick="castVote('down')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10z"/><path d="M17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>
+            Doesn't Match Reality
+            <span class="vote-count" id="vote-down-count">0</span>
+          </button>
+          <span class="vote-result-msg" id="vote-result-msg"></span>
+        </div>
+        <div class="vote-bar-wrap" id="vote-bar-wrap">
+          <div class="vote-bar-labels">
+            <span id="vote-bar-pct">0% accurate</span>
+            <span id="vote-bar-total">0 votes</span>
+          </div>
+          <div class="vote-bar-track">
+            <div class="vote-bar-fill" id="vote-bar-fill" style="width:0%"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1768,6 +1818,64 @@ function openDetail(id) {
   document.getElementById('page-detail').classList.add('active');
   window.scrollTo(0, 0);
   loadSellerData(p); // fetch seller sheet in background
+  loadVotes(p.id);   // load vote state for this product
+}
+
+// ── SELLER ACCURACY VOTING ────────────────────────────────────
+function voteKey(pid) { return 'vote_' + pid; }
+function voteCountKey(pid) { return 'votecount_' + pid; }
+
+function loadVotes(pid) {
+  const myVote = localStorage.getItem(voteKey(pid));
+  const counts = JSON.parse(localStorage.getItem(voteCountKey(pid)) || '{"up":0,"down":0}');
+  const upBtn   = document.getElementById('vote-up-btn');
+  const downBtn = document.getElementById('vote-down-btn');
+  const msg     = document.getElementById('vote-result-msg');
+  const barWrap = document.getElementById('vote-bar-wrap');
+
+  // reset classes
+  upBtn.classList.remove('voted-up','voted-down');
+  downBtn.classList.remove('voted-up','voted-down');
+  msg.classList.remove('show');
+
+  document.getElementById('vote-up-count').textContent   = counts.up;
+  document.getElementById('vote-down-count').textContent = counts.down;
+
+  if (myVote) {
+    if (myVote === 'up') { upBtn.classList.add('voted-up'); }
+    else { downBtn.classList.add('voted-down'); }
+    msg.textContent = myVote === 'up' ? 'Thanks for confirming!' : 'Thanks for the feedback!';
+    msg.classList.add('show');
+    updateVoteBar(counts);
+    barWrap.classList.add('show');
+  } else {
+    barWrap.classList.remove('show');
+  }
+}
+
+function castVote(dir) {
+  if (!currentProduct) return;
+  const pid     = currentProduct.id;
+  const prevDir = localStorage.getItem(voteKey(pid));
+  const counts  = JSON.parse(localStorage.getItem(voteCountKey(pid)) || '{"up":0,"down":0}');
+
+  if (prevDir === dir) return; // already voted same way, do nothing
+
+  // reverse previous vote if exists
+  if (prevDir) counts[prevDir] = Math.max(0, counts[prevDir] - 1);
+  counts[dir]++;
+
+  localStorage.setItem(voteKey(pid), dir);
+  localStorage.setItem(voteCountKey(pid), JSON.stringify(counts));
+  loadVotes(pid);
+}
+
+function updateVoteBar(counts) {
+  const total = counts.up + counts.down;
+  const pct   = total === 0 ? 0 : Math.round((counts.up / total) * 100);
+  document.getElementById('vote-bar-fill').style.width  = pct + '%';
+  document.getElementById('vote-bar-pct').textContent   = pct + '% say accurate';
+  document.getElementById('vote-bar-total').textContent = total + (total === 1 ? ' vote' : ' votes');
 }
 
 function renderDetail(p) {
