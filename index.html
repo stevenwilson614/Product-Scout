@@ -638,8 +638,8 @@ html,body{overflow-x:hidden;max-width:100%;}
   </div>
   <div class="search-suggestions" id="search-suggestions"></div>
   </div>
-  <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
-  <div class="nav-right">
+  <button id="nav-hamburger-btn" onclick="toggleMobileMenu()" aria-label="Menu" style="display:none;flex-direction:column;justify-content:center;gap:5px;cursor:pointer;padding:8px;background:rgba(255,255,255,0.18);border:none;border-radius:6px;flex-shrink:0;width:38px;height:38px;"><span style="display:block;width:20px;height:2px;background:#fff;border-radius:2px;margin:0 auto;"></span><span style="display:block;width:20px;height:2px;background:#fff;border-radius:2px;margin:0 auto;"></span><span style="display:block;width:20px;height:2px;background:#fff;border-radius:2px;margin:0 auto;"></span></button>
+  <div id="nav-right-links" class="nav-right">
     <a class="nav-link" onclick="showPage('discover')">Products</a>
     <a class="nav-link" onclick="showPage('about')">Tentang</a>
     <a class="nav-link" onclick="openFeedback()">Feedback</a>
@@ -2721,10 +2721,15 @@ loadData();
 
 // Mobile detection
 function applyMobileClass(){
+  var btn = document.getElementById('nav-hamburger-btn');
+  var links = document.getElementById('nav-right-links');
+  if(!btn || !links) return;
   if(window.innerWidth <= 768){
-    document.documentElement.classList.add('is-mobile');
+    btn.style.display = 'flex';
+    links.style.display = 'none';
   } else {
-    document.documentElement.classList.remove('is-mobile');
+    btn.style.display = 'none';
+    links.style.display = 'flex';
   }
 }
 applyMobileClass();
