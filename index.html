@@ -1797,7 +1797,7 @@ function cardHTML(p, idx) {
       ${p.image ? `<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'">` : ''}
       <div class="card-emoji" ${p.image ? 'style="display:none"' : ''}>${p.emoji||'📦'}</div>
       <div class="score-pill" style="--score-clr:${scoreColor(p.score)}">${fmtScore(p.score)}</div>
-      <div class="shopee-badge"><img src="images/shopee-logo.png" alt="Shopee"></div>
+      <div class="shopee-badge"><img src="/images/shopee-logo.png" alt="Shopee"></div>
     </div>
     <div class="card-body">
       <div class="card-name">${p.name}</div>
