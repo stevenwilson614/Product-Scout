@@ -212,9 +212,9 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
 .product-card:hover{transform:scale(1.04);box-shadow:var(--shh);z-index:2;}
 .card-img{position:relative;width:100%;padding-top:100%;background:#f8f3ee;overflow:hidden;}
 .card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
-.shopee-badge{display:flex;align-items:center;gap:5px;margin-top:5px;}
-.shopee-badge img{width:16px;height:16px;display:block;}
-.shopee-badge span{font-size:.68rem;color:#EE4D2D;font-weight:700;}
+.shopee-badge{position:absolute;bottom:6px;right:6px;display:flex;align-items:center;z-index:2;}
+.shopee-badge img{width:20px;height:20px;display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3));}
+
 .card-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:3rem;}
 .score-pill{position:absolute;top:7px;left:7px;background:#fff;border:2px solid var(--score-clr,var(--score-green));border-radius:6px;padding:2px 6px;font-family:'Roboto', 'Noto Sans', sans-serif;font-weight:900;font-size:.78rem;color:var(--score-clr,var(--score-green));line-height:1.4;box-shadow:0 1px 4px rgba(0,0,0,.1);}
 .card-body{padding:7px 9px 9px;}
@@ -848,7 +848,7 @@ body{font-family:'Roboto', 'Noto Sans', sans-serif;-webkit-font-smoothing:antial
           <!-- score + category + name -->
           <div class="det-info">
             <div class="det-score-row">
-              <span class="det-score-badge" id="d-score-badge">Score <span id="d-score">—</span></span>
+              <span class="det-score-badge" id="d-score-badge">Skor <span id="d-score">—</span></span>
               <span class="det-cat-tag" id="d-cat">—</span>
             </div>
 
@@ -1797,11 +1797,11 @@ function cardHTML(p, idx) {
       ${p.image ? `<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'">` : ''}
       <div class="card-emoji" ${p.image ? 'style="display:none"' : ''}>${p.emoji||'📦'}</div>
       <div class="score-pill" style="--score-clr:${scoreColor(p.score)}">${fmtScore(p.score)}</div>
+      <div class="shopee-badge"><img src="images/shopee-logo.png" alt="Shopee"></div>
     </div>
     <div class="card-body">
       <div class="card-name">${p.name}</div>
       <div class="card-cat">${p.category}</div>
-      <div class="shopee-badge"><img src="images/shopee-logo.png" alt="Shopee"><span>Tersedia di Shopee</span></div>
     </div>
   </div>`;
 }
@@ -1958,8 +1958,7 @@ function renderDetail(p) {
       <div class="fin-row mkt-row"><span class="fin-lbl">Marketing (15%)</span><span class="fin-val" style="color:#e74c3c">-${fmt(mkt)}</span></div>
       <div class="fin-row"><span class="fin-lbl">Platform Fees (5%)</span><span class="fin-val" style="color:#e74c3c">-${fmt(fees)}</span></div>
       <div class="fin-row subtotal"><span class="fin-lbl">Total Costs</span><span class="fin-val">${fmt(cogs+mkt+fees)}</span></div>
-      <div class="fin-row net-row"><span class="fin-lbl">Net Revenue</span><span class="fin-val">${fmt(net)}</span></div>
-      <div class="fin-row"><span class="fin-lbl">Profit Margin</span><span class="fin-val" style="color:#2980b9">${margin}%</span></div>`;
+      <div class="fin-row net-row"><span class="fin-lbl">Net Revenue</span><span class="fin-val">${fmt(net)}</span></div>`;
   }
 
   document.getElementById('fin-new').innerHTML = finRows(newUnits);
