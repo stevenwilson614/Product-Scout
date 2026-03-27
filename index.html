@@ -617,6 +617,9 @@ html,body{overflow-x:hidden;max-width:100%;}
   #sellers-scroll-hint{display:block !important;}
   #sellers-scroll-inner::after{content:'';position:absolute;top:0;right:0;width:40px;height:100%;background:linear-gradient(to right,transparent,rgba(255,255,255,0.9));pointer-events:none;}
 }
+.blog-tab{background:#f5f0ea;border:none;border-radius:20px;padding:7px 16px;font-size:.8rem;font-weight:600;color:#555;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background .15s,color .15s;}
+.blog-tab.active{background:var(--orange);color:#fff;}
+.blog-card{background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.07);padding:20px;margin-bottom:18px;border:1.5px solid #f0ebe4;}
 </style>
 </head>
 <body>
@@ -1073,70 +1076,153 @@ html,body{overflow-x:hidden;max-width:100%;}
      ABOUT PAGE — Tentang LarisID
 ════════════════════════════════════ -->
 <div class="page" id="page-blog">
-  <div style="max-width:860px;margin:0 auto;padding:24px 20px 60px;">
+  <div style="max-width:900px;margin:0 auto;padding:24px 20px 60px;">
 
-    <div style="margin-bottom:28px;">
-      <h1 style="font-size:1.6rem;font-weight:900;color:#111;margin-bottom:4px;">Blog LarisID</h1>
-      <p style="font-size:.88rem;color:var(--tl);">Tips, strategi, dan cerita dari seller Shopee Indonesia.</p>
+    <!-- HEADER -->
+    <div style="margin-bottom:24px;">
+      <h1 style="font-size:1.7rem;font-weight:900;color:#111;margin-bottom:4px;">Panduan Seller LarisID</h1>
+      <p style="font-size:.88rem;color:var(--tl);">Tips nyata dari seller berpengalaman — bukan teori, tapi praktik langsung.</p>
     </div>
 
-    <div style="background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.08);overflow:hidden;margin-bottom:24px;">
-
-      <div style="width:100%;height:200px;background:linear-gradient(135deg,#F53D2D 0%,#FF6633 100%);display:flex;align-items:center;justify-content:center;">
-        <span style="font-size:3rem;">🛍️</span>
-      </div>
-
-      <div style="padding:22px 24px;">
-
-        <div style="display:inline-block;background:#FFF0EC;color:var(--orange);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:12px;">Tips Jualan</div>
-
-        <h2 style="font-size:1.3rem;font-weight:900;color:#111;line-height:1.3;margin-bottom:10px;">5 Produk Dapur yang Lagi Naik Daun di Shopee — dan Cara Mulai Jualnya</h2>
-
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid #f0ebe4;flex-wrap:wrap;">
-          <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span style="color:#fff;font-weight:700;font-size:.9rem;">AS</span>
-          </div>
-          <div>
-            <div style="font-size:.82rem;font-weight:700;color:#111;">Andi Susanto</div>
-            <div style="font-size:.75rem;color:var(--tl);">Seller Shopee sejak 2021 · Toko: DapurKeren_ID · ⭐ 4.9</div>
-          </div>
-          <div style="margin-left:auto;font-size:.75rem;color:var(--tl);">24 Mar 2026 · 5 min baca</div>
-        </div>
-
-        <div style="font-size:.88rem;color:#333;line-height:1.75;">
-
-          <p style="margin-bottom:14px;">Saya mulai jualan di Shopee dengan modal Rp 500 ribu. Produk pertama saya? Kotak makan plastik biasa yang saya beli dari pasar Tanah Abang. Bulan pertama, saya hanya dapat 3 pesanan. Tapi sekarang, toko saya menghasilkan lebih dari <strong style="color:#111;">Rp 18 juta per bulan</strong> — dan semuanya berawal dari riset produk yang tepat.</p>
-
-          <p style="margin-bottom:14px;">Di artikel ini, saya akan share 5 kategori produk dapur yang sedang naik daun berdasarkan data yang saya lihat di LarisID, plus tips praktis cara mulai jualnya walau modal kecil.</p>
-
-          <h3 style="font-size:1rem;font-weight:800;color:#111;margin:20px 0 8px;">1. Tempat Beras Kedap Udara</h3>
-          <p style="margin-bottom:14px;">Produk ini stabil sepanjang tahun karena kebutuhan pokok. Viability Score di LarisID menunjukkan angka 78/100 — artinya pasar masih terbuka lebar dan belum dikuasai satu seller. Harga jual rata-rata Rp 35.000–55.000 dengan margin bersih sekitar 40%.</p>
-
-          <h3 style="font-size:1rem;font-weight:800;color:#111;margin:20px 0 8px;">2. Rak Bumbu Dapur Putar</h3>
-          <p style="margin-bottom:14px;">Tren dekorasi dapur estetik mendorong permintaan produk ini. Saya sendiri jual varian putih dan kayu — keduanya laku keras. Modal per unit sekitar Rp 22.000, jual Rp 65.000. Untung bersih hampir Rp 30.000 per item setelah ongkir.</p>
-
-          <h3 style="font-size:1rem;font-weight:800;color:#111;margin:20px 0 8px;">3. Kotak Makan Stainless Steel</h3>
-          <p style="margin-bottom:14px;">Kesadaran akan bahaya plastik mendorong shift ke produk stainless. Kompetisi masih rendah di kelas menengah (Rp 80.000–120.000). Skor viabilitas 82/100 di LarisID — ini salah satu peluang terbaik saat ini.</p>
-
-          <div style="background:#FFF0EC;border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:14px 16px;margin:20px 0;">
-            <div style="font-size:.8rem;font-weight:700;color:var(--orange);margin-bottom:4px;">💡 Tips dari Andi</div>
-            <div style="font-size:.82rem;color:#333;">Jangan langsung beli stok banyak. Order 5–10 pcs dulu, test pasar 2 minggu. Kalau udah ada 3–5 order organik, baru scale up. Ini cara saya validasi semua produk baru.</div>
-          </div>
-
-          <h3 style="font-size:1rem;font-weight:800;color:#111;margin:20px 0 8px;">4. Saringan Serbaguna Silikon</h3>
-          <p style="margin-bottom:14px;">Produk ini murah, ringan, dan mudah dikirim. Harga modal Rp 8.000, jual Rp 25.000. Memang marginnya kecil per unit, tapi volume ordernya tinggi — cocok untuk seller yang mau build track record cepat.</p>
-
-          <h3 style="font-size:1rem;font-weight:800;color:#111;margin:20px 0 8px;">5. Cetakan Es Batu Silikon</h3>
-          <p style="margin-bottom:14px;">Musim panas panjang Indonesia bikin produk ini relevan sepanjang tahun. Varian lucu (bentuk buah, karakter) terjual 3x lebih cepat dari yang polos.</p>
-
-          <p style="margin-top:20px;padding-top:16px;border-top:1px solid #f0ebe4;font-size:.82rem;color:var(--tl);">Semua data produk di atas bisa kamu cek langsung di LarisID — gratis dan selalu diperbarui. DM saya di Instagram <strong style="color:#111;">@andisusanto.shopee</strong>.</p>
-
-        </div>
-      </div>
+    <!-- CATEGORY TABS -->
+    <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;margin-bottom:24px;scrollbar-width:none;-webkit-overflow-scrolling:touch;">
+      <button onclick="filterBlog('semua')" class="blog-tab active" data-tab="semua">Semua</button>
+      <button onclick="filterBlog('foto')" class="blog-tab" data-tab="foto">📸 Foto Produk</button>
+      <button onclick="filterBlog('pengiriman')" class="blog-tab" data-tab="pengiriman">📦 Pengiriman</button>
+      <button onclick="filterBlog('inventory')" class="blog-tab" data-tab="inventory">🏭 Inventory</button>
+      <button onclick="filterBlog('iklan')" class="blog-tab" data-tab="iklan">📣 Iklan</button>
     </div>
 
-    <div style="text-align:center;padding:20px;color:var(--tl);font-size:.85rem;">
-      Artikel baru akan segera hadir. <span style="color:var(--orange);font-weight:700;cursor:pointer;">Ingin kontribusi?</span>
+    <!-- ARTICLES -->
+    <div id="blog-articles">
+
+      <!-- ARTICLE 1 -->
+      <div class="blog-card" data-category="foto">
+        <div style="display:inline-block;background:#FFF0EC;color:var(--orange);font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;">📸 Foto Produk</div>
+        <h2 style="font-size:1.15rem;font-weight:900;color:#111;line-height:1.35;margin-bottom:8px;">Foto Produk dengan HP Rp 2 Jutaan: Hasilnya Bisa Saingi Studio Profesional</h2>
+
+        <!-- AUTHOR -->
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:12px;background:#faf7f4;border-radius:10px;">
+          <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#f093fb,#f5576c);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;font-weight:900;color:#fff;">RS</div>
+          <div style="flex:1;">
+            <div style="font-size:.85rem;font-weight:800;color:#111;">Rina Setiawati</div>
+            <div style="font-size:.75rem;color:var(--tl);margin-top:1px;">Toko: <strong style="color:#333;">CantikStore_ID</strong> · Fashion Wanita</div>
+            <div style="display:flex;gap:8px;margin-top:5px;flex-wrap:wrap;">
+              <span style="background:#E8F8EE;color:#1a6b3a;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:20px;">⭐ 4.8</span>
+              <span style="background:#FFF0EC;color:var(--orange);font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:20px;">Rp 22jt/bln</span>
+              <span style="background:#EFF6FF;color:#1d4ed8;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:20px;">3 tahun berjualan</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size:.87rem;color:#333;line-height:1.75;">
+          <p style="margin-bottom:12px;">Dulu saya kira butuh kamera DSLR mahal untuk foto produk yang bagus. Ternyata salah besar. Setelah 3 tahun jualan fashion di Shopee, saya bisa bilang: <strong>pencahayaan jauh lebih penting dari kamera.</strong></p>
+
+          <h3 style="font-size:.95rem;font-weight:800;color:#111;margin:16px 0 6px;">1. Gunakan cahaya alami dari jendela</h3>
+          <p style="margin-bottom:12px;">Taruh produk di dekat jendela pagi hari (jam 8–10). Cahaya matahari pagi lembut dan merata. Hindari siang hari karena bayangan terlalu keras.</p>
+
+          <h3 style="font-size:.95rem;font-weight:800;color:#111;margin:16px 0 6px;">2. Background putih dari karton</h3>
+          <p style="margin-bottom:12px;">Beli karton putih Rp 5.000 di Alfamart. Lipat jadi sudut 90 derajat. Ini trik paling murah yang bikin foto terlihat profesional dan bersih.</p>
+
+          <h3 style="font-size:.95rem;font-weight:800;color:#111;margin:16px 0 6px;">3. Edit pakai Lightroom Mobile (gratis)</h3>
+          <p style="margin-bottom:12px;">Naikan Exposure +0.3, turunkan Highlights, naikkan Whites. Foto langsung terlihat lebih terang dan bersih. Satu preset bisa dipakai ke semua foto produk.</p>
+
+          <div style="background:#FFF0EC;border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:12px 14px;margin:16px 0;">
+            <div style="font-size:.78rem;font-weight:700;color:var(--orange);margin-bottom:3px;">💡 Tips dari Rina</div>
+            <div style="font-size:.82rem;color:#333;">Foto pertama di listing adalah yang paling penting. Saya selalu bikin 3 versi foto pertama dan test mana yang paling banyak diklik. CTR naik 40% setelah saya ganti foto pertama dengan yang menampilkan produk dipakai orang.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid #f0ebe4;font-size:.75rem;color:var(--tl);">20 Mar 2026 · 4 min baca</div>
+      </div>
+
+      <!-- ARTICLE 2 -->
+      <div class="blog-card" data-category="pengiriman">
+        <div style="display:inline-block;background:#E8F8EE;color:#1a6b3a;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;">📦 Pengiriman</div>
+        <h2 style="font-size:1.15rem;font-weight:900;color:#111;line-height:1.35;margin-bottom:8px;">Cara Saya Hemat Rp 3 Juta Per Bulan di Ongkos Kirim Shopee</h2>
+
+        <!-- AUTHOR -->
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:12px;background:#faf7f4;border-radius:10px;">
+          <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#4facfe,#00f2fe);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;font-weight:900;color:#fff;">BW</div>
+          <div style="flex:1;">
+            <div style="font-size:.85rem;font-weight:800;color:#111;">Budi Wijaya</div>
+            <div style="font-size:.75rem;color:var(--tl);margin-top:1px;">Toko: <strong style="color:#333;">ElektronikMurah88</strong> · Elektronik & Gadget</div>
+            <div style="display:flex;gap:8px;margin-top:5px;flex-wrap:wrap;">
+              <span style="background:#E8F8EE;color:#1a6b3a;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:20px;">⭐ 4.9</span>
+              <span style="background:#FFF0EC;color:var(--orange);font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:20px;">Rp 45jt/bln</span>
+              <span style="background:#EFF6FF;color:#1d4ed8;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:20px;">5 tahun berjualan</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size:.87rem;color:#333;line-height:1.75;">
+          <p style="margin-bottom:12px;">Pengiriman adalah biaya tersembunyi yang sering diabaikan seller pemula. Dulu saya kirim semua paket lewat counter JNE terdekat. Setelah saya hitung, saya buang-buang hampir Rp 3 juta per bulan.</p>
+
+          <h3 style="font-size:.95rem;font-weight:800;color:#111;margin:16px 0 6px;">1. Aktifkan semua kurir di Shopee</h3>
+          <p style="margin-bottom:12px;">Jangan hanya pakai satu kurir. Aktifkan J&T, SiCepat, Anteraja, dan Ninja. Buyer yang berbeda daerah punya kurir favorit berbeda, dan rate-nya pun beda. Saya hemat rata-rata Rp 2.000–4.000 per paket hanya dari ini.</p>
+
+          <h3 style="font-size:.95rem;font-weight:800;color:#111;margin:16px 0 6px;">2. Daftar Shopee Xpress untuk volume tinggi</h3>
+          <p style="margin-bottom:12px;">Kalau kamu kirim lebih dari 30 paket per hari, daftar ke program Shopee Xpress. Rate-nya bisa 20–30% lebih murah dari counter biasa.</p>
+
+          <h3 style="font-size:.95rem;font-weight:800;color:#111;margin:16px 0 6px;">3. Packaging efisien = berat lebih ringan</h3>
+          <p style="margin-bottom:12px;">Saya pindah dari bubble wrap tebal ke single-layer + kardus custom yang pas ukurannya. Berat rata-rata turun 150gr per paket. Dikali 300 paket/bulan = hemat signifikan.</p>
+
+          <div style="background:#E8F8EE;border-left:3px solid #27AE60;border-radius:0 8px 8px 0;padding:12px 14px;margin:16px 0;">
+            <div style="font-size:.78rem;font-weight:700;color:#1a6b3a;margin-bottom:3px;">💡 Tips dari Budi</div>
+            <div style="font-size:.82rem;color:#333;">Minta pickup jangan drop off. Kurir yang pickup ke rumah biasanya gratis kalau volume cukup, dan kamu hemat waktu + bensin. Saya nego langsung dengan driver Shopee Express area saya — deal 30 paket/hari, dia pickup tiap pagi jam 9.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid #f0ebe4;font-size:.75rem;color:var(--tl);">22 Mar 2026 · 5 min baca</div>
+      </div>
+
+      <!-- ARTICLE 3 -->
+      <div class="blog-card" data-category="inventory">
+        <div style="display:inline-block;background:#EFF6FF;color:#1d4ed8;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;">🏭 Inventory</div>
+        <h2 style="font-size:1.15rem;font-weight:900;color:#111;line-height:1.35;margin-bottom:8px;">Dari Pasar Tanah Abang ke Alibaba: Panduan Cari Supplier Produk Dapur</h2>
+
+        <!-- AUTHOR -->
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:12px;background:#faf7f4;border-radius:10px;">
+          <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#43e97b,#38f9d7);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;font-weight:900;color:#fff;">AS</div>
+          <div style="flex:1;">
+            <div style="font-size:.85rem;font-weight:800;color:#111;">Andi Susanto</div>
+            <div style="font-size:.75rem;color:var(--tl);margin-top:1px;">Toko: <strong style="color:#333;">DapurKeren_ID</strong> · Alat Dapur</div>
+            <div style="display:flex;gap:8px;margin-top:5px;flex-wrap:wrap;">
+              <span style="background:#E8F8EE;color:#1a6b3a;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:20px;">⭐ 4.9</span>
+              <span style="background:#FFF0EC;color:var(--orange);font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:20px;">Rp 18jt/bln</span>
+              <span style="background:#EFF6FF;color:#1d4ed8;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:20px;">4 tahun berjualan</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size:.87rem;color:#333;line-height:1.75;">
+          <p style="margin-bottom:12px;">Banyak seller pemula terjebak beli inventory terlalu banyak di awal, atau salah pilih supplier dan barang tidak laku. Ini panduan yang saya wish tahu dari awal.</p>
+
+          <h3 style="font-size:.95rem;font-weight:800;color:#111;margin:16px 0 6px;">1. Mulai dari Tanah Abang atau Mangga Dua</h3>
+          <p style="margin-bottom:12px;">Untuk produk pertama, beli di pasar lokal dulu. MOQ rendah, bisa lihat kualitas langsung, bisa nego harga. Rugi paling banyak Rp 500rb kalau produk tidak laku — bukan Rp 10 juta.</p>
+
+          <h3 style="font-size:.95rem;font-weight:800;color:#111;margin:16px 0 6px;">2. Setelah validasi, upgrade ke Alibaba atau 1688</h3>
+          <p style="margin-bottom:12px;">Kalau produk sudah terbukti laku minimal 50 unit/bulan, baru naik ke supplier Tiongkok. Harga bisa 40–60% lebih murah. Pakai agent sourcing lokal untuk pertama kali agar lebih aman.</p>
+
+          <h3 style="font-size:.95rem;font-weight:800;color:#111;margin:16px 0 6px;">3. Aturan stok: jangan lebih dari 2 bulan</h3>
+          <p style="margin-bottom:12px;">Saya selalu hitung: kalau saya jual X unit/bulan, stok maksimal 2X unit. Lebih dari itu modal nganggur. Lebih baik restock lebih sering daripada modal tertahan di gudang.</p>
+
+          <div style="background:#EFF6FF;border-left:3px solid #3b82f6;border-radius:0 8px 8px 0;padding:12px 14px;margin:16px 0;">
+            <div style="font-size:.78rem;font-weight:700;color:#1d4ed8;margin-bottom:3px;">💡 Tips dari Andi</div>
+            <div style="font-size:.82rem;color:#333;">Minta sampel sebelum order besar — ini wajib. Dan selalu order 10–20% lebih dari yang kamu butuhkan karena ada reject rate. Saya pernah order 500 unit, 47 unit reject. Untung ada buffer, pesanan customer tetap terpenuhi.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid #f0ebe4;font-size:.75rem;color:var(--tl);">25 Mar 2026 · 6 min baca</div>
+      </div>
+
+    </div><!-- end blog-articles -->
+
+    <!-- CTA -->
+    <div style="margin-top:32px;background:var(--grad);border-radius:14px;padding:24px;text-align:center;color:#fff;">
+      <div style="font-size:1rem;font-weight:800;margin-bottom:6px;">Punya pengalaman jualan yang ingin kamu share?</div>
+      <div style="font-size:.83rem;opacity:.9;margin-bottom:14px;">Kami publish artikelmu gratis — namamu & tokomu dipromosiin ke ribuan seller Indonesia.</div>
+      <button onclick="openFeedback()" style="background:#fff;color:var(--orange);font-weight:800;font-size:.85rem;border:none;border-radius:8px;padding:10px 22px;cursor:pointer;">Hubungi Kami →</button>
     </div>
 
   </div>
@@ -2794,6 +2880,13 @@ function openFeedback() {
 })();
 
 loadData();
+
+function filterBlog(cat) {
+  document.querySelectorAll('.blog-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === cat));
+  document.querySelectorAll('.blog-card').forEach(c => {
+    c.style.display = (cat === 'semua' || c.dataset.category === cat) ? 'block' : 'none';
+  });
+}
 
 // Mobile detection
 function applyMobileClass(){
